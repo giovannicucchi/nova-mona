@@ -1,0 +1,17 @@
+[
+  {
+    "image": "/assets/images/benefits/1.png",
+    "name": "Entrega rápida",
+    "content": "Fazemos de tudo para ter uma entrega rápida"
+  },
+  {
+    "image": "/assets/images/benefits/3.png",
+    "name": "Entre em contato",
+    "content": "Estamos disponíveis para quaisquer dúvidas"
+  },
+  {
+    "image": "/assets/images/benefits/4.png",
+    "name": "Sempre em promoção",
+    "content": "Temos os melhores preços da região"
+  }
+]

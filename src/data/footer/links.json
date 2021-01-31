@@ -1,0 +1,16 @@
+{
+  "accountLinks": [
+    { "name": "Minha conta", "to": "/" },
+    { "name": "Carrinho", "to": "/shop/cart" },
+    { "name": "Checkout", "to": "/shop/checkout" }
+  ],
+  "informationLinks": [
+    { "name": "Sobre nós", "to": "/other/about" },
+    { "name": "Informação sobre entrega", "to": "/other/contact" }
+  ],
+  "creditLinks": [
+    { "name": "Privacy Policy", "to": "/other/contact" },
+    { "name": "Terms & Condition", "to": "/other/contact" },
+    { "name": "Site map", "to": "/other/contact" }
+  ]
+}

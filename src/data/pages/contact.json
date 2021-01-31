@@ -1,0 +1,22 @@
+[
+  {
+    "iconClass": "fas fa-map-marker-alt",
+    "title": "Endereço",
+    "detail": "Aquele lugar alí do lado"
+  },
+  {
+    "iconClass": "fas fa-phone-alt",
+    "title": "Telefone",
+    "detail": "71 99647-5094"
+  },
+  {
+    "iconClass": "far fa-envelope",
+    "title": "Email",
+    "detail": "lojadamona@gmail.com"
+  },
+  {
+    "iconClass": "far fa-clock",
+    "title": "Funcionamento",
+    "detail": "Seg a Sex 8h as 23h"
+  }
+]

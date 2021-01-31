@@ -1,0 +1,15 @@
+{
+  "subTitle": {
+    "main": "Sobre a",
+    "span": "Mona"
+  },
+  "title": {
+    "main": "Quando você fica bonita",
+    "span": "Você fica bem"
+  },
+  "description": "Aqui vai ser um monte de coisa sobre a loja da mona e como ela chegou aonde chegou e porque ela chegou",
+  "btn": {
+    "content": "Appointment",
+    "color": "white"
+  }
+}

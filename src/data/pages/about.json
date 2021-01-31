@@ -1,0 +1,26 @@
+[
+  {
+    "name": "2006",
+    "description": "Mona começou a trabalhar como manicure",
+    "videoPoster": "/assets/images/introduction/IntroductionTwo/1.png",
+    "videoSrc": "https://www.youtube.com/embed/80e0QHPYRG4"
+  },
+  {
+    "name": "2010",
+    "description": "Abriu a loja",
+    "videoPoster": "/assets/images/introduction/IntroductionTwo/2.png",
+    "videoSrc": "https://www.youtube.com/embed/xn7jfVWWSio"
+  },
+  {
+    "name": "2015",
+    "description": "Abriu a loja online",
+    "videoPoster": "/assets/images/introduction/IntroductionTwo/3.png",
+    "videoSrc": "https://www.youtube.com/embed/K3M-czGNUCg"
+  },
+  {
+    "name": "2021",
+    "description": "Fez a melhor loja online da história",
+    "videoPoster": "/assets/images/introduction/IntroductionTwo/4.png",
+    "videoSrc": "https://www.youtube.com/embed/hoPiGLf0ICA"
+  }
+]
