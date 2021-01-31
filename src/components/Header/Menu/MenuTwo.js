@@ -58,7 +58,7 @@ export default function MenuTwo({ container }) {
 
           </div>
 
-          <MenuFunctionIcons hide="search cart" />
+          <MenuFunctionIcons hide="search" />
         </div>
       </div>
     </div>
