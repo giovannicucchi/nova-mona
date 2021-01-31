@@ -75,7 +75,7 @@ function Product({ data, type, className }) {
                   <img
                     src={process.env.PUBLIC_URL + data.image.formats.small.url}
                     alt="Product image"
-                    style={{height:345, width: 270, objectFit: 'cover', zIndex: -1}}
+                    style={{height:345, objectFit: 'cover', zIndex: -1}}
                   />
                 }
               </a>
