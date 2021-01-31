@@ -5,7 +5,7 @@ import TopNavTwo from "./TopNav/TopNavTwo";
 export default function HeaderOne(props) {
   return (
     <>
-      {/* <TopNavTwo {...props} /> */}
+      {/* <TopNavTwo {...props} /> */} 
       <MenuTwo {...props} />
     </>
   );
