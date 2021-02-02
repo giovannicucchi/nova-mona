@@ -50,7 +50,7 @@ export default function MenuTwo({ container }) {
                 </Link>
               </li>
               <li>
-                <Link href={process.env.PUBLIC_URL + '/login'}>
+                <Link href={process.env.PUBLIC_URL + '/register'}>
                   <a>Registrar</a>
                 </Link>
               </li>
