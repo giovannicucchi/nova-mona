@@ -1,3 +1,7 @@
+import React from 'react'
+import Cookie from "js-cookie";
+import AuthContext from '../context/AuthContext'
+
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import { persistor, store } from "../redux/store";
@@ -10,7 +14,37 @@ import Loading from "../components/Other/Loading";
 import withReduxStore from "../common/with-redux-store";
 
 const App = ({ Component, pageProps, reduxStore }) => {
+  const [user, setUser ] =  React.useState(null) 
+
   console.log('page props', pageProps);
+  React.useEffect(()=> {
+    const token = Cookie.get("token");
+    console.log('TOKEN', token)
+
+    if (token) {
+      // authenticate the token on the server and place set user object
+      fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/users/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then(async (res) => {
+        // if res comes back not valid, token is not valid
+        // delete the token and log the user out on client
+        if (!res.ok) {
+          Cookie.remove("token");
+          setUser(null)
+          return null;
+        }
+        const user = await res.json();
+        setUserState(user)
+      });
+    }
+  }, [])
+
+  const setUserState = (user)=> {
+    setUser(user);
+  }
+
   return (
     <Provider store={reduxStore}>
       <PersistGate loading={<Loading />} persistor={persistor}>
