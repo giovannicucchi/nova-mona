@@ -48,7 +48,7 @@ export default function MenuFunctionIcons(props) {
         )}
         {!hide.includes("cart") && (
           <>
-            <Link href={process.env.PUBLIC_URL + "/shop/wishlist"}>
+            {/* <Link href={process.env.PUBLIC_URL + "/shop/wishlist"}>
               <a className="menu-icon -wishlist">
                 <img
                   src={
@@ -86,7 +86,7 @@ export default function MenuFunctionIcons(props) {
               <h5>
                 Cart: <span>{formatCurrency(calcalateTotal(cartState))}</span>
               </h5>
-            </div>
+            </div> */}
             <a
               href="#"
               className="menu-icon -navbar"
@@ -103,9 +103,9 @@ export default function MenuFunctionIcons(props) {
         )}
       </div>
       {/* Search input */}
-      <SearchBox showSearch={showSearch} setShowSearch={setShowSearch} />
+      {/* <SearchBox showSearch={showSearch} setShowSearch={setShowSearch} /> */}
       {/* Cart sidebar */}
-      <CartItemsSidebar showCart={showCart} setShowCart={setShowCart} />
+      {/* <CartItemsSidebar showCart={showCart} setShowCart={setShowCart} /> */}
       {/* Mobile navigation sidebar */}
       <MobileNavSidebar
         showMobileNav={showMobileNav}

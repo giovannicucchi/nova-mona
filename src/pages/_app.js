@@ -14,10 +14,10 @@ import Loading from "../components/Other/Loading";
 import withReduxStore from "../common/with-redux-store";
 
 const App = ({ Component, pageProps, reduxStore }) => {
-  const [user, setUser ] =  React.useState(null) 
+  const [user, setUser] = React.useState(null)
 
   console.log('page props', pageProps);
-  React.useEffect(()=> {
+  React.useEffect(() => {
     const token = Cookie.get("token");
     console.log('TOKEN', token)
 
@@ -41,27 +41,35 @@ const App = ({ Component, pageProps, reduxStore }) => {
     }
   }, [])
 
-  const setUserState = (user)=> {
+  const setUserState = (user) => {
     setUser(user);
   }
 
   return (
-    <Provider store={reduxStore}>
-      <PersistGate loading={<Loading />} persistor={persistor}>
-        <Component {...pageProps} />
-        <ToastContainer position="bottom-left" autoClose={3000} />
-        <ScrollToTop
-          smooth
-          component={<i className="fal fa-arrow-to-top" />}
-          style={{
-            backgroundColor: "#f7f5f4",
-            borderRadius: "999px",
-            height: "50px",
-            width: "50px",
-          }}
-        />
-      </PersistGate>
-    </Provider>
+    <AuthContext.Provider
+      value={{
+        user: user,
+        isAuthenticated: !!user,
+        setUser: setUserState,
+      }}
+    >
+      <Provider store={reduxStore}>
+        <PersistGate loading={<Loading />} persistor={persistor}>
+          <Component {...pageProps} />
+          <ToastContainer position="bottom-left" autoClose={3000} />
+          <ScrollToTop
+            smooth
+            component={<i className="fal fa-arrow-to-top" />}
+            style={{
+              backgroundColor: "#f7f5f4",
+              borderRadius: "999px",
+              height: "50px",
+              width: "50px",
+            }}
+          />
+        </PersistGate>
+      </Provider>
+    </AuthContext.Provider>
   );
 };
 

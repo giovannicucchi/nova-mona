@@ -118,11 +118,14 @@ export default function SliderTwo({ className, data, showArrows, showDots }) {
                       unmountOnExit
                     >
                       <div>
-                        <Button
-                          action={process.env.PUBLIC_URL + "#"}
-                          content={'Compre agora'}
-                          color={'white'}
-                        />
+                        {slide.product &&
+                          <Button
+                            action={process.env.PUBLIC_URL + `shop/product/${slide.product.slug}`}
+                            content={'Compre agora'}
+                            color={'white'}
+                          />
+
+                        }
                       </div>
                     </CSSTransition>
                   </div>
