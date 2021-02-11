@@ -11,6 +11,7 @@ import ProductDetailController from "./ProductDetailController";
 import ProductDetailInfoTab from "./ProductDetailInfoTab";
 import Rate from "../../Other/Rate";
 import { checkProductInWishList } from "../../../common/shopUtils";
+import axios from 'axios'
 
 export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
   const dispatch = useDispatch();
@@ -20,10 +21,59 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
   const getQuantity = (q) => {
     setQuantity(q);
   };
-  const onAddToCart = (e) => {
+  
+
+  //for paiment
+  React.useEffect(()=> {
+    
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.dataset.publicKey= 'APP_USR-c5c318e3-050d-4886-b223-b9737586524e'
+    script.src = "https://www.mercadopago.com/v2/security.js"
+
+    document.body.appendChild(script);
+    return 
+  }, [])
+
+  const generateScript = (id)=> {
+    window.open(id, "_self")
+  }
+ 
+  const onBuy = async () => {
+    
+    const preference = {
+      items:  [{
+        "id": data.id,
+        "title": data.title,
+        "description": data.description,
+        "category_id": 'home',
+        "quantity": data.quantity || 1,
+        "currency_id": 'BRL',
+        "unit_price": data.price,
+      }],
+      payer: {
+        "email":"joabe.dourado.jf@gmail.com"
+      },
+      "back_urls": {
+        "success": "http://localhost:3000/order-status/success/",
+        "failure": "http://localhost:3000/order-status/failure/",
+        "pending": "http://localhost:3000/order-status/pending/"
+      },
+    }
+
+    await axios.post(`http://localhost:1337/payment`, preference)
+      .then(({data}) => {
+        if(data.id)
+          generateScript(data.id)
+        
+      }).catch(err => console.log(err))
+   }  
+
+   const onAddToCart = (e) => {
     e.preventDefault();
+    onBuy()
     dispatch(addToCart(data, quantity, otherColor));
-    toast.success("Product added to cart");
+    toast.success("Redirecionando");
   };
   const onAddToWishList = (e) => {
     e.preventDefault();
@@ -36,6 +86,8 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
       return toast.error("Product removed from wishlist !");
     }
   };
+
+
   return (
     <div className="product-detail__content">
       <div className="product-detail__content__header">
