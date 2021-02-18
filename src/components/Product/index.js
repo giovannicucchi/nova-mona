@@ -223,14 +223,17 @@ function Product({ data, type, className }) {
               </p>
                 <div className="product__actions">
                   <div className="product-btn">
-                    <AddToCart
+                    <Button onClick={onBuy} >
+                      COMPRAR
+                    </Button>
+                    {/* <AddToCart
                       onClick={addToCartHandle}
                       className={classNames({
                         "-disable":
                           checkProductInCart(cartState, data.id) ||
                           data.quantity < 1,
                       })}
-                    />
+                    /> */}
                   </div>
                   <div className="product-btn" data-tip data-for="l-qvIcon">
                     <Button
