@@ -44,19 +44,21 @@ export default function () {
         <BreadcrumbItem name="Home" />
         <BreadcrumbItem name="Login" current />
       </Breadcrumb>
+      <div className="col-xs-12 col-sm-9 col-md-6 form-register">
 
-      <Form style={{ marginBottom: '2em' }}>
-        <FormGroup style={{ textAlign: 'center', marginBottom: '1em' }}>
-          <Label for="exampleEmail" style={{ marginRight: '0.5em' }}>Email</Label>
-          <Input onChange={(e) => setUsername(e.target.value)} type="email" name="email" id="exampleEmail" placeholder="Qual seu email?" />
-        </FormGroup>
-        <FormGroup style={{ textAlign: 'center', marginBottom: '1em' }}>
-          <Label for="examplePassword" style={{ marginRight: '0.5em' }}>Password</Label>
-          <Input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="examplePassword" placeholder="Digite sua senha" />
-        </FormGroup>
-        
-        <Button onClick={handleSubmit} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white' }}>Login</Button>
-      </Form>
+        <Form style={{ marginBottom: '2em' }}>
+          <FormGroup style={{ display: 'flex', flexDirection: 'column', marginBottom: '1.5em' }}>
+            <Label for="exampleEmail" style={{ marginRight: '0.5em', marginBottom: '0.5em' }}>Usuário</Label>
+            <Input onChange={(e) => setUsername(e.target.value)} type="email" name="email" id="exampleEmail" placeholder="Qual seu usuário?" />
+          </FormGroup>
+          <FormGroup style={{ display: 'flex', flexDirection: 'column', marginBottom: '1.5em' }}>
+            <Label for="examplePassword" style={{ marginRight: '0.5em', marginBottom: '0.5em' }}>Senha</Label>
+            <Input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="examplePassword" placeholder="Digite sua senha" />
+          </FormGroup>
+
+          <Button onClick={handleSubmit} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white' }}>Login</Button>
+        </Form>
+      </div>
       <Benefits />
     </LayoutFour>
   );

@@ -23,19 +23,9 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
   const onAddToCart = (e) => {
     e.preventDefault();
     dispatch(addToCart(data, quantity, otherColor));
-    toast.success("Product added to cart");
+    toast.success("Produto adicionado ao carrinho!");
   };
-  const onAddToWishList = (e) => {
-    e.preventDefault();
-    let product = checkProductInWishList(wishlistState, data.id);
-    dispatch(addToWishlist(data));
-    toast.dismiss();
-    if (!product) {
-      return toast.success("Product added to wishlist !");
-    } else {
-      return toast.error("Product removed from wishlist !");
-    }
-  };
+ 
   return (
     <div className="product-detail__content">
       <div className="product-detail__content__header">
@@ -43,7 +33,7 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
         <h2>{data.name}</h2>
 
         <h3>
-          apenas ${data.price}
+          apenas R${data.price}
         </h3>
       </div>
       <div className="divider"></div>

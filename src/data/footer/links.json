@@ -1,6 +1,6 @@
 {
   "accountLinks": [
-    { "name": "Minha conta", "to": "/" },
+    { "name": "Minha conta", "to": "/conta" },
     { "name": "Carrinho", "to": "/shop/cart" },
     { "name": "Checkout", "to": "/shop/checkout" }
   ],

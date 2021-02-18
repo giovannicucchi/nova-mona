@@ -74,12 +74,16 @@
 @import "pages/wishlist";
 
 @media all and (min-width: 480px) {
-    .Login {
-      padding: 60px 0;
-    }
-  
-    .Login form {
-      margin: 0 auto;
-      max-width: 320px;
-    }
+  .Login {
+    padding: 60px 0;
   }
+
+  .Login form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}
+
+.form-register {
+  margin: auto;
+}
