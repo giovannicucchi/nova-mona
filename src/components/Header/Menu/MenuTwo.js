@@ -23,7 +23,7 @@ export default function MenuTwo({ container }) {
       <div className={renderContainer(container)}>
         <div className="menu__wrapper">
           {/* <MenuFunctionIcons hide="cart" /> */}
-          <div className="navigator" style={{alignItems: 'center'}}>
+          <div className="navigator" style={{ alignItems: 'center' }}>
             <ul className="navigator_part -left">
               {/* {data.slice(0, 4).map((item, index) => (
                 <li key={index}>
@@ -53,12 +53,19 @@ export default function MenuTwo({ container }) {
 
 
               {user ?
-                <li>
-                  <a onClick={() => {
-                    logout();
-                    setUser(null);
-                  }}>Logout</a>
-                </li>
+                <>
+                  <li>
+                    <Link href={process.env.PUBLIC_URL + '/conta'}>
+                      <a>Minha conta</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <a onClick={() => {
+                      logout();
+                      setUser(null);
+                    }}>Logout</a>
+                  </li>
+                </>
                 :
                 <>
                   <li>

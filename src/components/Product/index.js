@@ -41,41 +41,32 @@ function Product({ data, type, className }) {
     return null;
   }
   const addToCartHandle = (e) => {
+    console.log('clickou', e)
     e.preventDefault();
     let productItem = checkProductInCart(cartState, data.id);
     if (!productItem && data.quantity > 0) {
       dispatch(addToCart(data, 1, otherColor && otherColor.color));
-      return toast.success("Product added to cart !");
+      return toast.success("Produto adicionado ao carrinho!");
     }
   };
-  const addToWishlistHandle = (e) => {
-    e.preventDefault();
-    const wishlistItem = checkProductInWishList(wishlistData, data.id);
-    dispatch(addToWishlist(data));
-    toast.dismiss();
-    if (!wishlistItem) {
-      return toast.success("Product added to wishlist !");
-    } else {
-      return toast.error("Product removed from wishlist !");
-    }
-  };
+  
 
   return (
     <>
       {!type || type === "grid" ? (
         <div className={`product ${classNames(className)}`}>
           <div className="product-type">{renderType()}</div>
-          <div className="product__thumb" style={{marginBottom: '0.5em'}}>
+          <div className="product__thumb" style={{ marginBottom: '0.5em' }}>
             <Link
               href={`${process.env.PUBLIC_URL}/shop/product/[slug]`}
               as={`${process.env.PUBLIC_URL}/shop/product/${data.slug}`}
             >
-              <a className="product__thumb__image" style={{border: '2px solid #F8AAC3', display: 'flex'}}>
+              <a className="product__thumb__image" style={{ border: '2px solid #F8AAC3', display: 'flex' }}>
                 {data.image.formats.small &&
                   <img
                     src={process.env.PUBLIC_URL + data.image.formats.small.url}
                     alt="Product image"
-                    style={{height:345, objectFit: 'cover', zIndex: -1}}
+                    style={{ height: 345, objectFit: 'cover', zIndex: -1 }}
                   />
                 }
               </a>
@@ -98,7 +89,7 @@ function Product({ data, type, className }) {
                 ></Button>
               </div>
               <ReactTooltip id="cartIcon" type="dark" effect="solid">
-                <span>Adicionar no Carrinho</span>
+                <span>Adicionar ao Carrinho</span>
               </ReactTooltip>
               <div className="product-btn" data-tip data-for="qvIcon">
                 <Button
@@ -117,22 +108,7 @@ function Product({ data, type, className }) {
               <ReactTooltip id="qvIcon" type="dark" effect="solid">
                 <span>Espiar</span>
               </ReactTooltip>
-              {/* <div className="product-btn" data-tip data-for="wlIcon">
-                <Button
-                  height={50 / 14 + "em"}
-                  width={50 / 14 + "em"}
-                  color="white"
-                  className={`product__actions__item -round ${classNames({
-                    active: checkProductInWishList(wishlistData, data.id),
-                  })}`}
-                  action="#"
-                  onClick={addToWishlistHandle}
-                  content={<i className="fas fa-heart" />}
-                ></Button>
-              </div>
-              <ReactTooltip id="wlIcon" type="dark" effect="solid">
-                <span>Add to Wishlist</span>
-              </ReactTooltip> */}
+           
             </div>
           </div>
           <div className="product__content">
@@ -229,8 +205,8 @@ function Product({ data, type, className }) {
                         <div
                           key={index}
                           className={`product-colors__item ${otherColor && otherColor.colorCode === color.colorCode
-                              ? "active"
-                              : ""
+                            ? "active"
+                            : ""
                             }`}
                           style={{ backgroundColor: color.colorCode }}
                           onClick={() => setOtherColor(color)}
