@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import classNames from "classnames";
@@ -12,12 +12,15 @@ import ProductDetailInfoTab from "./ProductDetailInfoTab";
 import Rate from "../../Other/Rate";
 import { checkProductInWishList } from "../../../common/shopUtils";
 import axios from 'axios'
+import AuthContext from "../../../context/AuthContext";
 
 export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
+  const authContext = useContext(AuthContext)
   const dispatch = useDispatch();
   const wishlistState = useSelector((state) => state.wishlistReducer);
   const [quantity, setQuantity] = useState();
   const [otherColor, setOtherColor] = useState();
+  const user = authContext.user
   const getQuantity = (q) => {
     setQuantity(q);
   };
@@ -52,7 +55,7 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
         "unit_price": data.price,
       }],
       payer: {
-        "email":"joabe.dourado.jf@gmail.com"
+        "email": user.name
       },
       "back_urls": {
         "success": "http://localhost:3000/order-status/success/",
