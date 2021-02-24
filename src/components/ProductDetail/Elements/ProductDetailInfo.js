@@ -28,7 +28,6 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
 
   //for paiment
   React.useEffect(()=> {
-    
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.dataset.publicKey= 'APP_USR-c5c318e3-050d-4886-b223-b9737586524e'
@@ -55,12 +54,12 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
         "unit_price": data.price,
       }],
       payer: {
-        "email": user.name
+        "email": user.email
       },
       "back_urls": {
-        "success": "http://localhost:3000/order-status/success/",
-        "failure": "http://localhost:3000/order-status/failure/",
-        "pending": "http://localhost:3000/order-status/pending/"
+        "success": "http://localhost:3000/order-status/success/params",
+        "failure": "http://localhost:3000/order-status/failure/params",
+        "pending": "http://localhost:3000/order-status/pending/params"
       },
     }
 
