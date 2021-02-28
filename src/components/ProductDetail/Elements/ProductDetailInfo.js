@@ -26,28 +26,26 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
   const getQuantity = (q) => {
     setQuantity(q);
   };
-  
 
-  //for paiment
-  React.useEffect(()=> {
+  React.useEffect(() => {
     const script = document.createElement("script");
     script.type = "text/javascript";
-    script.dataset.publicKey= 'APP_USR-c5c318e3-050d-4886-b223-b9737586524e'
+    script.dataset.publicKey = 'APP_USR-c5c318e3-050d-4886-b223-b9737586524e'
     script.src = "https://www.mercadopago.com/v2/security.js"
 
     document.body.appendChild(script);
-    return 
+    return
   }, [])
 
-  const generateScript = (id)=> {
+  const generateScript = (id) => {
     window.open(id, "_self")
   }
- 
+
   const onBuy = async () => {
-    if(!user) return router.push('/login')
-    
+    if (!user) return router.push('/login')
+
     const preference = {
-      items:  [{
+      items: [{
         "id": data.id,
         "title": data.title,
         "description": data.description,
@@ -57,7 +55,7 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
         "unit_price": data.price,
       }],
       payer: {
-        "id": user.id, 
+        "id": user.id,
         "email": user.email,
         "name": user.name
       },
@@ -68,21 +66,21 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
       },
     }
 
-    await axios.post(`${env.process.NEXT_PUBLIC_STRAPI_API_URL}/payment`, preference)
-      .then(({data}) => {
-        if(data.id)
+    await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/payment`, preference)
+      .then(({ data }) => {
+        if (data.id)
           generateScript(data.id)
-        
-      }).catch(err => console.log(err))
-   }  
 
-   const onAddToCart = (e) => {
+      }).catch(err => console.log(err))
+  }
+
+  const onAddToCart = (e) => {
     e.preventDefault();
     onBuy()
     dispatch(addToCart(data, quantity, otherColor));
     toast.success("Redirecionando");
   };
-  
+
   return (
     <div className="product-detail__content">
       <div className="product-detail__content__header">
@@ -95,9 +93,9 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
       </div>
       <div className="divider"></div>
       <div className="product-detail__content__footer">
-        <p style={{marginBottom: 20}}>
+        <p style={{ marginBottom: 20 }}>
           {data.description}
-          </p>
+        </p>
         {/* {data.variation && (
           <div className="product-detail__colors">
             <span>Color:</span>
