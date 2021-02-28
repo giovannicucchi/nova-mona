@@ -13,8 +13,10 @@ import Rate from "../../Other/Rate";
 import { checkProductInWishList } from "../../../common/shopUtils";
 import axios from 'axios'
 import AuthContext from "../../../context/AuthContext";
+import { useRouter } from "next/router";
 
 export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
+  const router = useRouter();
   const authContext = useContext(AuthContext)
   const dispatch = useDispatch();
   const wishlistState = useSelector((state) => state.wishlistReducer);
@@ -42,6 +44,7 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
   }
  
   const onBuy = async () => {
+    if(!user) return router.push('/login')
     
     const preference = {
       items:  [{
@@ -54,7 +57,9 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
         "unit_price": data.price,
       }],
       payer: {
-        "email": user.email
+        "id": user.id,
+        "email": user.email,
+        "name": user.name
       },
       "back_urls": {
         "success": "http://localhost:3000/order-status/success/params",
@@ -63,6 +68,7 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
       },
     }
 
+    // await axios.post(`${env.process.NEXT_PUBLIC_STRAPI_API_URL}/payment`, preference)
     await axios.post(`http://localhost:1337/payment`, preference)
       .then(({data}) => {
         if(data.id)

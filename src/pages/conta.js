@@ -13,6 +13,7 @@ export default function () {
   const router = useRouter()
   console.log('auth', authContext)
 
+  const [loading, setLoading] = useState(false)
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
