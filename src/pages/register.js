@@ -19,7 +19,6 @@ export default function () {
   const [reference, setReference] = useState("")
   const [cep, setCep] = useState("")
   const [city, setCity] = useState("")
-
   const [loading, setLoading] = useState(false)
 
   const authContext = useContext(AuthContext)

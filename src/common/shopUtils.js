@@ -1,6 +1,10 @@
 import { formatCurrency } from "./utils";
 
 export const checkProductInCart = (cartArr, pid, color) => {
+  console.log('check product in cart')
+  console.log('cartArr', cartArr)
+  console.log('pid', pid)
+  console.log('color', color)
   if (cartArr || cartArr.length > 0) {
     if (color && color !== "") {
       return cartArr.find(

@@ -38,6 +38,11 @@ export default function () {
       });
   };
 
+  const goToRegister = () => {
+    setLoading(true);
+    router.push("/register");
+  }
+
   return (
     <LayoutFour title="Login">
       <Breadcrumb title="Login">
@@ -45,19 +50,23 @@ export default function () {
         <BreadcrumbItem name="Login" current />
       </Breadcrumb>
       <div className="col-xs-12 col-sm-9 col-md-6 form-register">
+        {loading ?
+          <p>CARREGANDO...</p>
+          :
+          <Form style={{ marginBottom: '2em' }}>
+            <FormGroup style={{ display: 'flex', flexDirection: 'column', marginBottom: '1.5em' }}>
+              <Label for="exampleEmail" style={{ marginRight: '0.5em', marginBottom: '0.5em' }}>Usuário</Label>
+              <Input onChange={(e) => setUsername(e.target.value)} type="email" name="email" id="exampleEmail" placeholder="Qual seu usuário?" />
+            </FormGroup>
+            <FormGroup style={{ display: 'flex', flexDirection: 'column', marginBottom: '1.5em' }}>
+              <Label for="examplePassword" style={{ marginRight: '0.5em', marginBottom: '0.5em' }}>Senha</Label>
+              <Input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="examplePassword" placeholder="Digite sua senha" />
+            </FormGroup>
 
-        <Form style={{ marginBottom: '2em' }}>
-          <FormGroup style={{ display: 'flex', flexDirection: 'column', marginBottom: '1.5em' }}>
-            <Label for="exampleEmail" style={{ marginRight: '0.5em', marginBottom: '0.5em' }}>Usuário</Label>
-            <Input onChange={(e) => setUsername(e.target.value)} type="email" name="email" id="exampleEmail" placeholder="Qual seu usuário?" />
-          </FormGroup>
-          <FormGroup style={{ display: 'flex', flexDirection: 'column', marginBottom: '1.5em' }}>
-            <Label for="examplePassword" style={{ marginRight: '0.5em', marginBottom: '0.5em' }}>Senha</Label>
-            <Input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="examplePassword" placeholder="Digite sua senha" />
-          </FormGroup>
-
-          <Button onClick={handleSubmit} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white' }}>Login</Button>
-        </Form>
+            <Button onClick={handleSubmit} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white', marginBottom:'1em' }}>Login</Button>
+            <Button onClick={goToRegister} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white' }}>Registrar</Button>
+          </Form>
+        }
       </div>
       <Benefits />
     </LayoutFour>

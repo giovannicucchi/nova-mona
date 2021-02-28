@@ -40,10 +40,14 @@ function Product({ data, type, className }) {
     }
     return null;
   }
+  
   const addToCartHandle = (e) => {
     console.log('clickou', e)
     e.preventDefault();
+    console.log("cartState", cartState)
     let productItem = checkProductInCart(cartState, data.id);
+    console.log('product item', productItem)
+    console.log('data quantity', data.quantity)
     if (!productItem && data.quantity > 0) {
       dispatch(addToCart(data, 1, otherColor && otherColor.color));
       return toast.success("Produto adicionado ao carrinho!");
@@ -224,7 +228,7 @@ function Product({ data, type, className }) {
                 <div className="product__actions">
                   <div className="product-btn">
                     <Button onClick={onBuy} >
-                      COMPRAR
+                      COMPRAR AAAAAA
                     </Button>
                     {/* <AddToCart
                       onClick={addToCartHandle}
@@ -270,9 +274,9 @@ function Product({ data, type, className }) {
                       content={<i className="fas fa-heart" />}
                     ></Button>
                   </div>
-                  <ReactTooltip id="l-wlIcon" type="dark" effect="solid">
+                  {/* <ReactTooltip id="l-wlIcon" type="dark" effect="solid">
                     <span>Add to Wishlist</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                 </div>
               </div>
             </div>
