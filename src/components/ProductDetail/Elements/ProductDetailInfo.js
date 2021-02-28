@@ -57,7 +57,7 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
         "unit_price": data.price,
       }],
       payer: {
-        "id": user.id,
+        "id": user.id, 
         "email": user.email,
         "name": user.name
       },
@@ -68,8 +68,7 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
       },
     }
 
-    // await axios.post(`${env.process.NEXT_PUBLIC_STRAPI_API_URL}/payment`, preference)
-    await axios.post(`http://localhost:1337/payment`, preference)
+    await axios.post(`${env.process.NEXT_PUBLIC_STRAPI_API_URL}/payment`, preference)
       .then(({data}) => {
         if(data.id)
           generateScript(data.id)
