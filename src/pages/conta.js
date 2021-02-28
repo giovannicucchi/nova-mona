@@ -36,10 +36,10 @@ export default function () {
       .then((res) => {
         console.log('res', res)
         // setLoading(false);
-        authContext.setUser(res.config.data);
+        authContext.setUser(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log('error', error);
         // setLoading(false);
       });
   };

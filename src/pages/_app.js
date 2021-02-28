@@ -16,7 +16,7 @@ import withReduxStore from "../common/with-redux-store";
 const App = ({ Component, pageProps, reduxStore }) => {
   const [user, setUser] = React.useState(null)
 
-  console.log('page props', pageProps);
+  // console.log('page props', pageProps);
   React.useEffect(() => {
     const token = Cookie.get("token");
     console.log('TOKEN', token)

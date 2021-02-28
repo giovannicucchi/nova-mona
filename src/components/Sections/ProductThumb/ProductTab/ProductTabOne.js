@@ -8,7 +8,7 @@ import Button from "../../../Control/Button";
 import { getCategory, getProducts } from '../../../../utils/api'
 
 export default function ProductTabOne({ data, categories }) {
-  console.log('data', data)
+  // console.log('data', data)
   const [filteredProduct, setFilteredProduct] = useState(data)
   const [currentCategory, setCurrentCategory] = useState(
     categories ? categories[0] : "loja"
