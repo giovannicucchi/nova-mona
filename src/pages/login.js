@@ -7,6 +7,8 @@ import LayoutFour from "../components/Layout/LayoutFour";
 import { Breadcrumb, BreadcrumbItem } from "../components/Other/Breadcrumb";
 import Benefits from "../components/Other/Benefits";
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import Loading from "../components/Other/Loading";
+
 
 
 export default function () {
@@ -29,12 +31,10 @@ export default function () {
 
     login(username, password)
       .then((res) => {
-        setLoading(false);
         authContext.setUser(res.data.user);
       })
       .catch((error) => {
         console.log(error.response.data);
-        setLoading(false);
       });
   };
 
@@ -51,7 +51,9 @@ export default function () {
       </Breadcrumb>
       <div className="col-xs-12 col-sm-9 col-md-6 form-register">
         {loading ?
-          <p>CARREGANDO...</p>
+        <div style={{width: '100%', height: '15em'}}>
+          <Loading />
+        </div>
           :
           <Form style={{ marginBottom: '2em' }}>
             <FormGroup style={{ display: 'flex', flexDirection: 'column', marginBottom: '1.5em' }}>
