@@ -4,11 +4,7 @@ import IntroductionOne from "../../components/Sections/Introduction/Introduction
 import introductionOneData from "../../data/introduction/introductionOne.json";
 import IntroductionTwo from "../../components/Sections/Introduction/IntroductionTwo";
 import introductionTwoData from "../../data/pages/about.json";
-import TestimonialOne from "../../components/Sections/Testimonial/TestimonialOne";
-import testimonialOneData from "../../data/testimonial/data.json";
 import Benefits from "../../components/Other/Benefits";
-import IntroductionNine from "../../components/Sections/Introduction/IntroductionNine";
-import InstagramTwo from "../../components/Sections/Instagram/InstagramTwo";
 
 export default function () {
   return (
@@ -19,13 +15,7 @@ export default function () {
       </Breadcrumb>
       <IntroductionOne data={introductionOneData} />
       <IntroductionTwo data={introductionTwoData} style={{ marginBottom: 0 }} />
-      {/* <TestimonialOne
-        data={testimonialOneData}
-        style={{ backgroundColor: "#fff", marginBottom: 0 }}
-      /> */}
-      {/* <IntroductionNine /> */}
       <Benefits />
-      {/* <InstagramTwo /> */}
     </LayoutFour>
   );
 }

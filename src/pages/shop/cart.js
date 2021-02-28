@@ -144,27 +144,6 @@ export default function () {
                 </div>
                 <div className="cart__total">
                   <div className="row">
-                    <div className="col-12 col-md-8">
-                      {/* <div className="cart__total__discount">
-                      <p>Enter coupon code. It will be applied at checkout.</p>
-                      <div className="input-validator">
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                          <input
-                            type="text"
-                            name="discountCode"
-                            placeholder="Your code here"
-                            ref={register({ required: true })}
-                          />
-                          <button className="btn -dark">Apply</button>
-                        </form>
-                        {errors.discountCode && (
-                          <span className="input-error">
-                            Please provide a discount code
-                          </span>
-                        )}
-                      </div>
-                    </div> */}
-                    </div>
                     <div className="col-12 col-md-4">
                       <div className="cart__total__content">
                         <h3>Total do carrinho</h3>
