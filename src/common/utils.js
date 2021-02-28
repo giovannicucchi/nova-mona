@@ -2,7 +2,7 @@ export function formatCurrency(num, to = 2, currency = "USD") {
   let newNum = Number.parseFloat(num).toFixed(to);
   switch (currency) {
     case "USD":
-      return `$${newNum}`;
+      return `R$${newNum}`;
     default:
       return `${newNum}VND`;
   }
