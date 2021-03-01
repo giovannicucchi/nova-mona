@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
+import Link from "next/link";
+
 
 import ClientOnlyPortal from "../../../common/ClientOnlyPortal";
 import NavigatorMobile from "./NavigatorMobile";
@@ -20,36 +22,17 @@ export default function MobileNavSidebar({ showMobileNav, setShowMobileNav }) {
           classNames="cart-sidebar"
         >
           <div className="navigation-sidebar">
-            {/* <div className="search-box">
-              <form>
-                <input
-                  type="text"
-                  placeholder="What are you looking for?"
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                />
-                <button>
-                  <img
-                    src="/assets/images/header/search-icon.png"
-                    alt="Search icon"
-                  />
-                </button>
-              </form>
-            </div> */}
             <NavigatorMobile />
             <div className="navigation-sidebar__footer">
-              {/* <Select
-                options={["USD", "VND", "YEN"]}
-                getValue={(val) => setCurrency(val)}
-                className="-borderless"
-              />
-              <Select
-                options={["ENG", "VI", "JP"]}
-                getValue={(val) => setLanguage(val)}
-                className="-borderless"
-              /> */}
-              <a className="navigation-sidebar__footer__auth">Login/Register</a>
-              <SocialIcons />
+              <div style={{marginBottom: '1rem'}}>
+                <Link href={process.env.PUBLIC_URL + '/login'}>
+                  <p style={{ textDecoration: 'none', marginBottom: '1rem' }}>Login</p>
+                </Link>
+                <Link href={process.env.PUBLIC_URL + '/register'}>
+                  <p style={{ textDecoration: 'none' }}>Registrar</p>
+                </Link>
+              </div>
+              <SocialIcons style={{ marginTop: 12 }} />
             </div>
           </div>
         </CSSTransition>

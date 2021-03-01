@@ -14,7 +14,7 @@ export default function () {
         <BreadcrumbItem name="Sobre nós" current />
       </Breadcrumb>
       <IntroductionOne data={introductionOneData} />
-      <IntroductionTwo data={introductionTwoData} style={{ marginBottom: 0 }} />
+      {/* <IntroductionTwo data={introductionTwoData} style={{ marginBottom: 0 }} /> */}
       <Benefits />
     </LayoutFour>
   );

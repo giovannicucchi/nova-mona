@@ -50,8 +50,6 @@ export default function MenuTwo({ container }) {
           </div>
           <div className="navigator">
             <ul className="navigator_part -right">
-
-
               {user ?
                 <>
                   <li>
@@ -81,9 +79,7 @@ export default function MenuTwo({ container }) {
                 </>
               }
             </ul>
-
           </div>
-
           <MenuFunctionIcons hide="search" />
         </div>
       </div>

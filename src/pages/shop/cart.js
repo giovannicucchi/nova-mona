@@ -143,7 +143,7 @@ export default function () {
                   </div>
                 </div>
                 <div className="cart__total">
-                  <div className="row">
+                  <div className="row" style={{justifyContent: 'flex-end'}}>
                     <div className="col-12 col-md-4">
                       <div className="cart__total__content">
                         <h3>Total do carrinho</h3>
