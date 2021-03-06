@@ -15,6 +15,8 @@ import axios from 'axios'
 import AuthContext from "../../../context/AuthContext";
 import { useRouter } from "next/router";
 
+
+
 export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
   const router = useRouter();
   const authContext = useContext(AuthContext)
@@ -40,7 +42,7 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
   const generateScript = (id) => {
     window.open(id, "_self")
   }
-
+  
   const onBuy = async () => {
     if (!user) return router.push('/login')
 
@@ -55,19 +57,22 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
         "unit_price": data.price,
       }],
       payer: {
-        "id": user.id,
+        "user_id": user.id,
         "email": user.email,
         "name": user.name
       },
-      "back_urls": {
-        "success": "http://localhost:3000/order-status/success/params",
-        "failure": "http://localhost:3000/order-status/failure/params",
-        "pending": "http://localhost:3000/order-status/pending/params"
+      "shipments":{
+          "cost": 0,
       },
-    }
+      "back_urls": {
+        "success": `loja-mona.vercel.app/order-status/success/params`,
+        "failure": `loja-mona.vercel.app/order-status/failure/params`,
+        "pending": `loja-mona.vercel.app/order-status/pending/params`
+      },
+    } 
 
     await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/order/preference`, preference)
-      .then(({ data }) => {
+      .then(({ data }) => { 
         if (data.id)
           generateScript(data.id)
 
