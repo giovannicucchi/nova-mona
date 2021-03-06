@@ -9,6 +9,7 @@ import { Button, Form, FormGroup, Label, Input, FormText, UncontrolledCollapse, 
 
 import Loading from "../components/Other/Loading";
 import styled from 'styled-components'
+import axios from 'axios';
 
 export default function () {
   const authContext = useContext(AuthContext)
@@ -25,62 +26,20 @@ export default function () {
   const [cep, setCep] = useState("")
   const [city, setCity] = useState("")
   const [loading, setLoading] = useState(false)
+  const [listaPedidos, setListaPedidos] = useState([])
 
-  const ListaPedidos = [
-    {
-      id: 0,
-      produtos: [
-        {
-          id: 33,
-          nome: 'aaaa',
-          valor: 1.90
-        },
-        {
-          id: 22,
-          nome: 'bbbb',
-          valor: 9.99
-        },
-        {
-          id: 15,
-          nome: 'cccc',
-          valor: 17.90
-        },
-        {
-          id: 66,
-          nome: 'dddd',
-          valor: 1.99
-        }
-      ],
-      status: 'Entregue'
-    },
-    {
-      id: 1,
-      produtos: [
-        {
-          id: 34,
-          nome: 'mdasinod',
-          valor: 6.90
-        },
-        {
-          id: 26,
-          nome: 'dmeqioidsa',
-          valor: 19.99
-        },
-        {
-          id: 24,
-          nome: 'dawndioa dnioasd',
-          valor: 12.90
-        },
-        {
-          id: 10,
-          nome: 'diasn disandw ind sixnwn',
-          valor: 10.90
-        }
-      ],
-      status: 'Pendente'
-    },
-
-  ]
+  useEffect(async () => {
+    const user = authContext.user
+    if(user) {
+      await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/orders/${user.id}`)
+        .then(res => {
+            if(res.status === 200)
+              setListaPedidos(res.data)
+        })
+        .catch(err => console.log('Erro', err))
+    } else 
+      router.push('/login')
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -138,8 +97,8 @@ export default function () {
           :
           <>
             <div className="col-xs-12">
-              <h5>Lista de Pedidos</h5>
-              {ListaPedidos.map((item, index) => (
+              {listaPedidos.length > 0 && <h5>Lista de Pedidos</h5>}
+              {listaPedidos.map((item, index) => (
                 <div key={index} style={{marginBottom: '2em'}}>
                   <Button color="primary" id={'toggler' + index} style={{ marginTop: '1rem', width: '100%', display: 'flex', justifyContent: 'space-between'}}>
                     <div>
@@ -150,7 +109,7 @@ export default function () {
                         {item.status}
                       </div>
                       <div>
-                        Total: {calculateValue(item).toFixed(2)}
+                        Total: {item.total_amount.toFixed(2)}
                       </div>
 
                     </div>
@@ -158,8 +117,8 @@ export default function () {
                   <UncontrolledCollapse toggler={'#toggler' + index}>
                     <Card>
                       <CardBody>
-                        {item.produtos.map((p, index) => (
-                          <li key={index}>{p.nome} - R${p.valor}</li>
+                        {item.items.map((p, index) => (
+                          <li key={index}>{p.title} - R${p.unit_price}</li>
                         ))}
                     </CardBody>
                     </Card>

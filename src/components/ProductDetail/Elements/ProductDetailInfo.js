@@ -66,7 +66,7 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
       },
     }
 
-    await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/payment`, preference)
+    await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/order/preference`, preference)
       .then(({ data }) => {
         if (data.id)
           generateScript(data.id)
