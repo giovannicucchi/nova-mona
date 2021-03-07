@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 import classNames from "classnames";
 
 import { formatCurrency } from "../../../common/utils";
@@ -13,7 +14,6 @@ import Rate from "../../Other/Rate";
 import { checkProductInWishList } from "../../../common/shopUtils";
 import axios from 'axios'
 import AuthContext from "../../../context/AuthContext";
-import { useRouter } from "next/router";
 
 
 
@@ -42,7 +42,7 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
   const generateScript = (id) => {
     window.open(id, "_self")
   }
-  
+
   const onBuy = async () => {
     if (!user) return router.push('/login')
 
@@ -61,18 +61,18 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
         "email": user.email,
         "name": user.name
       },
-      "shipments":{
-          "cost": 0,
+      "shipments": {
+        "cost": 0,
       },
       "back_urls": {
         "success": `loja-mona.vercel.app/order-status/success/params`,
         "failure": `loja-mona.vercel.app/order-status/failure/params`,
         "pending": `loja-mona.vercel.app/order-status/pending/params`
       },
-    } 
+    }
 
     await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/order/preference`, preference)
-      .then(({ data }) => { 
+      .then(({ data }) => {
         if (data.id)
           generateScript(data.id)
 
@@ -81,9 +81,10 @@ export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
 
   const onAddToCart = (e) => {
     e.preventDefault();
-    onBuy()
+    // onBuy()
     dispatch(addToCart(data, quantity, otherColor));
     toast.success("Redirecionando");
+        router.push("/shop/cart");
   };
 
   return (

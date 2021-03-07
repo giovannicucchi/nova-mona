@@ -1,30 +1,31 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
+import Link from "next/link"
+import { useRouter } from "next/router"
 import { useState, useContext, useEffect } from 'react'
-import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import AuthContext from "../../context/AuthContext";
+import { useSelector } from "react-redux"
+import { useForm } from "react-hook-form"
+import AuthContext from "../../context/AuthContext"
 
-import LayoutFour from "../../components/Layout/LayoutFour";
-import { Breadcrumb, BreadcrumbItem } from "../../components/Other/Breadcrumb";
-import InstagramTwo from "../../components/Sections/Instagram/InstagramTwo";
-import { formatCurrency, formatSingleNumber } from "../../common/utils";
-import { calculateTotalPrice } from "../../common/shopUtils";
+import LayoutFour from "../../components/Layout/LayoutFour"
+import { Breadcrumb, BreadcrumbItem } from "../../components/Other/Breadcrumb"
+import InstagramTwo from "../../components/Sections/Instagram/InstagramTwo"
+import { formatCurrency, formatSingleNumber } from "../../common/utils"
+import { calculateTotalPrice } from "../../common/shopUtils"
 
 export default function () {
   const authContext = useContext(AuthContext)
   const router = useRouter()
 
-  const cartState = useSelector((state) => state.cartReducer);
-  const { register, handleSubmit, errors } = useForm();
+  const cartState = useSelector((state) => state.cartReducer)
+  const { register, handleSubmit, errors } = useForm()
   const {
     register: couponRegister,
     handleSubmit: couponHandleSubmit,
     errors: couponErrors,
-  } = useForm();
+  } = useForm()
   const onSubmit = (data) => {
     console.log(data)
-    !authContext.user && router.push("/register");
+    !authContext.user && router.push("/register")
+    onBuy()
   }
 
   const [email, setEmail] = useState("")
@@ -35,19 +36,67 @@ export default function () {
   const [reference, setReference] = useState("")
   const [cep, setCep] = useState("")
   const [city, setCity] = useState("")
+  const [cartItems, setCartItems] = useState([])
 
   useEffect(() => {
     if (authContext.user) {
-      setEmail(authContext.user.email);
-      setAddress(authContext.user.address);
-      setComplement(authContext.user.complement);
-      setAddressNumber(authContext.user.addressNumber);
-      setNeighborhood(authContext.user.neighborhood);
-      setReference(authContext.user.reference);
-      setCep(authContext.user.cep)
+      console.log("auth context user", authContext.user)
+      setEmail(authContext.user.email)
+      setAddress(authContext.user.address)
+      setComplement(authContext.user.complement)
+      setAddressNumber(authContext.user.addressNumber)
+      setNeighborhood(authContext.user.neighborhood)
+      setReference(authContext.user.reference)
       setCity(authContext.user.city)
+
+      console.log('cart state', cartState)
+      if (cartState) {
+        let array = []
+        cartState.map(item => {
+          let productInfo = {
+            "id": item.id,
+            "title": item.title,
+            "description": item.description,
+            "category_id": 'home',
+            "quantity": item.cartQuantity,
+            "currency_id": 'BRL',
+            "unit_price": item.price,
+          }
+          array.push(productInfo)
+        })
+        setCartItems(array)
+      }
+
     }
   }, [authContext])
+
+  const onBuy = async () => {
+    if (!user) return router.push('/login')
+
+    const preference = {
+      items: cartItems,
+      payer: {
+        "user_id": user.id,
+        "email": user.email,
+        "name": user.name
+      },
+      "shipments": {
+        "cost": 0,
+      },
+      "back_urls": {
+        "success": `loja-mona.vercel.app/order-status/success/params`,
+        "failure": `loja-mona.vercel.app/order-status/failure/params`,
+        "pending": `loja-mona.vercel.app/order-status/pending/params`
+      },
+    }
+
+    await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/order/preference`, preference)
+      .then(({ data }) => {
+        if (data.id)
+          generateScript(data.id)
+
+      }).catch(err => console.log(err))
+  }
 
   return (
     <LayoutFour title="Checkout">
@@ -65,13 +114,13 @@ export default function () {
                   <div className="checkout__form__contact">
                     <div className="checkout__form__contact__title">
                       <h5 className="checkout-title">Informação de Contato</h5>
-                      {!authContext.user && 
-                      <p>
-                        Já tem uma conta?
+                      {!authContext.user &&
+                        <p>
+                          Já tem uma conta?
                         <Link href={process.env.PUBLIC_URL + "/login"}>
-                          <a>Login</a>
-                        </Link>
-                      </p>
+                            <a>Login</a>
+                          </Link>
+                        </p>
                       }
                     </div>
                     <div className="input-validator">
@@ -120,6 +169,8 @@ export default function () {
                               ref={register({ required: true })}
                               placeholder="Endereço"
                               value={address}
+                              onChange={(e) => setAddress(e.target.value)}
+
                             />
                             <input
                               type="text"
@@ -127,6 +178,8 @@ export default function () {
                               ref={register({ required: true })}
                               placeholder="Número"
                               value={addressNumber}
+                              onChange={(e) => setAddressNumber(e.target.value)}
+
                             />
                           </label>
                           {errors.streetAddress || errors.apartment ? (
@@ -145,6 +198,8 @@ export default function () {
                               name="town"
                               ref={register({ required: true })}
                               value={city}
+                              onChange={(e) => setCity(e.target.value)}
+
                             />
                           </label>
                           {errors.town && (
@@ -163,6 +218,8 @@ export default function () {
                               name="state"
                               ref={register({ required: true })}
                               value={neighborhood}
+                              onChange={(e) => setNeighborhood(e.target.value)}
+
                             />
                           </label>
                           {errors.state && (
@@ -176,15 +233,17 @@ export default function () {
                       <div className="col-12">
                         <div className="input-validator">
                           <label>
-                            Referência <span>*</span>               
+                            Referência <span>*</span>
                             <input
                               type="text"
                               name="reference"
                               ref={register({ required: false })}
                               value={reference}
+                              onChange={(e) => setReference(e.target.value)}
+
                             />
                           </label>
-                          
+
                         </div>
                       </div>
                       <div className="col-12">
@@ -192,10 +251,13 @@ export default function () {
                           <label>
                             Código Postal <span>*</span>
                             <input
-                              type="text"
+                              type="number"
                               name="zip"
                               ref={register({ required: true })}
                               value={cep}
+                              onChange={(e) => setCep(e.target.value)}
+                              placeholder="Apenas números"
+
                             />
                           </label>
                           {errors.zip && (
@@ -281,5 +343,5 @@ export default function () {
       </div>
       {/* <InstagramTwo /> */}
     </LayoutFour>
-  );
+  )
 }
