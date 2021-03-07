@@ -29,9 +29,12 @@ export default function () {
   const [listaPedidos, setListaPedidos] = useState([])
 
   useEffect(async () => {
+    let token = localStorage.getItem('token')
     const user = authContext.user
     if(user) {
-      await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/orders/${user.id}`)
+      await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/orders`, { 
+        headers: { Authorization: `Bearer ${token}`}
+      })
         .then(res => {
             if(res.status === 200)
               setListaPedidos(res.data)

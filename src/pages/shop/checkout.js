@@ -4,7 +4,7 @@ import { useState, useContext, useEffect } from 'react'
 import { useSelector } from "react-redux"
 import { useForm } from "react-hook-form"
 import AuthContext from "../../context/AuthContext"
-
+import axios from 'axios'
 import LayoutFour from "../../components/Layout/LayoutFour"
 import { Breadcrumb, BreadcrumbItem } from "../../components/Other/Breadcrumb"
 import InstagramTwo from "../../components/Sections/Instagram/InstagramTwo"
@@ -23,9 +23,10 @@ export default function () {
     errors: couponErrors,
   } = useForm()
   const onSubmit = (data) => {
-    console.log(data)
-    !authContext.user && router.push("/register")
-    onBuy()
+    // console.log(data)
+    // !authContext.user && router.push("/register")
+    // onBuy()
+    calcFrete()
   }
 
   const [email, setEmail] = useState("")
@@ -37,6 +38,49 @@ export default function () {
   const [cep, setCep] = useState("")
   const [city, setCity] = useState("")
   const [cartItems, setCartItems] = useState([])
+
+  const calcFrete = async () => {
+    let products = []
+    cartItems.map(p => {
+      let object = {
+        id: p.id,
+        width: 10,
+        height: 10,
+        length: 10,
+        weight: p.peso ? p.peso : 0.3,
+        insurance_value: 0,
+        quantity: p.quantity
+      }
+      products.push(object)
+    })
+    var data = JSON.stringify(
+      {
+        "from": {
+          "postal_code": "41301170"
+        },
+        "to": {
+          "postal_code": cep
+        }, "products": products
+      });
+
+    // const data =
+    await axios.post(`https://www.melhorenvio.com.br/api/v2/me/shipment/calculate`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjI1Y2VlYzYwOWE0ZDg3MzQxOTNiZTQ5M2RhOWExNTUxYmQwM2U2YjJkNGFkOGUxNzk0NGFkNzBmMDEzYWM5ODdiYWIzYjM0OTMxMjA3MDFiIn0.eyJhdWQiOiIxIiwianRpIjoiMjVjZWVjNjA5YTRkODczNDE5M2JlNDkzZGE5YTE1NTFiZDAzZTZiMmQ0YWQ4ZTE3OTQ0YWQ3MGYwMTNhYzk4N2JhYjNiMzQ5MzEyMDcwMWIiLCJpYXQiOjE2MTUxNTU0MjIsIm5iZiI6MTYxNTE1NTQyMiwiZXhwIjoxNjQ2NjkxNDIyLCJzdWIiOiI4NGM5YWE0Yi02MDcwLTQxYTktYTFjNi01MGYwYTUzZmQ3ZTkiLCJzY29wZXMiOlsic2hpcHBpbmctY2FsY3VsYXRlIiwic2hpcHBpbmctdHJhY2tpbmciLCJlY29tbWVyY2Utc2hpcHBpbmciXX0.lMuZNpL-2XIaoqKaNcZuY5ZMMWJNUj3WVtBpoHN_mzqT-z8Rjzy4qBjJrFzXZqXCFIDk3JZtQH9O54BhAvmnyF0zy0DDEPlcVVz5rVsL_XojvHj8B0UNx7lqobpHJx1zxgI_JZ9X1YobCj1FSiq_gjDjKSFsUdta5M86imQUazW9GpnSJqKAIhR-GpL00kq9WE5MyDWoc-9KueI4Rt0RG5TWG-xdR1w0uKO9nmE6xEZgt7Icx18gYk-Mq4svMQz0fWcjsrc98Dm0lFquzWrLey4TnpLzDCzGDijzJZb48BB3tReJfucjOy58HTdkhGFBeiTuWh0IzXvT-glf-KHxQny3sBiUBWGQFzfgzYrpGVK5AEol6eluQF_MU0eNqLpcaQnET5pfz67ba_ZAiYF3R_SsMMjBvt4UMbpRMyzKtuiZd9ssAb36dvPAsCyR5OUnZp3jrfyCT_PepEXU1vwcBxcJHDwGrmbMup7w3RJJxeBzqUN6vbOvrM9d0aHmaFw6b4W_2cbHUp8Ug057xMEgkIW4lm7qxjMErZvSberw6DjNEN2XTBrk4JEul-rxXxfcsfHdW3aIbDl8wZVb1W-MKwEJ1uhoBVaUUXBEMeRw2GMjd-csalKeisTwwd3sbx_TwOg6K9XKl8F21o-jAPq6ByNk7lk6VIxbwMqP2MfRZvw',
+        'User-Agent': 'loja da mona (monalisa.23@hotmail.com.br)'
+      },
+      body: data
+    })
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
 
   useEffect(() => {
     if (authContext.user) {
@@ -72,6 +116,7 @@ export default function () {
 
   const onBuy = async () => {
     if (!user) return router.push('/login')
+    let token = localStorage.getItem('token')
 
     const preference = {
       items: cartItems,
@@ -90,7 +135,9 @@ export default function () {
       },
     }
 
-    await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/order/preference`, preference)
+    await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/order/preference`, preference, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(({ data }) => {
         if (data.id)
           generateScript(data.id)
@@ -330,7 +377,7 @@ export default function () {
                     </div>
                     <button
                       className="btn -red"
-                      onClick={handleSubmit(onSubmit)}
+                      onClick={() => calcFrete()}
                     >
                       Prosseguir
                     </button>

@@ -15,8 +15,6 @@ import { checkProductInWishList } from "../../../common/shopUtils";
 import axios from 'axios'
 import AuthContext from "../../../context/AuthContext";
 
-
-
 export default function ProductDetailInfo({ data, onReviewSubmit, hideTab }) {
   const router = useRouter();
   const authContext = useContext(AuthContext)
