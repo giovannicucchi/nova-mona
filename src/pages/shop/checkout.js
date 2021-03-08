@@ -22,11 +22,12 @@ export default function () {
     handleSubmit: couponHandleSubmit,
     errors: couponErrors,
   } = useForm()
+  
   const onSubmit = (data) => {
     // console.log(data)
-    // !authContext.user && router.push("/register")
-    // onBuy()
+    !authContext.user && router.push("/register")
     calcFrete()
+    onBuy()
   }
 
   const [email, setEmail] = useState("")
@@ -38,48 +39,57 @@ export default function () {
   const [cep, setCep] = useState("")
   const [city, setCity] = useState("")
   const [cartItems, setCartItems] = useState([])
+  const [deliveryPrice, setDeliveryPrice] = useState(0)
+
+  const totalValue = () => { 
+    let x = calculateTotalPrice(cartState, false)
+    let y = Number(deliveryPrice)
+    let z = x+y
+    return z
+  }
 
   const calcFrete = async () => {
-    let products = []
+    let array = []
+    console.log('cart items', cartItems)
     cartItems.map(p => {
+      console.log('map', p)
       let object = {
-        id: p.id,
-        width: 10,
-        height: 10,
-        length: 10,
-        weight: p.peso ? p.peso : 0.3,
-        insurance_value: 0,
-        quantity: p.quantity
+        "id": p.id,
+        "width": 10,
+        "height": 10,
+        "length": 10,
+        "weight": p.peso ? p.peso : 0.3,
+        "insurance_value": p.unit_price,
+        "quantity": p.quantity
       }
-      products.push(object)
+      array.push(object)
     })
-    var data = JSON.stringify(
-      {
-        "from": {
-          "postal_code": "41301170"
-        },
-        "to": {
-          "postal_code": cep
-        }, "products": products
-      });
-
-    // const data =
-    await axios.post(`https://www.melhorenvio.com.br/api/v2/me/shipment/calculate`, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjI1Y2VlYzYwOWE0ZDg3MzQxOTNiZTQ5M2RhOWExNTUxYmQwM2U2YjJkNGFkOGUxNzk0NGFkNzBmMDEzYWM5ODdiYWIzYjM0OTMxMjA3MDFiIn0.eyJhdWQiOiIxIiwianRpIjoiMjVjZWVjNjA5YTRkODczNDE5M2JlNDkzZGE5YTE1NTFiZDAzZTZiMmQ0YWQ4ZTE3OTQ0YWQ3MGYwMTNhYzk4N2JhYjNiMzQ5MzEyMDcwMWIiLCJpYXQiOjE2MTUxNTU0MjIsIm5iZiI6MTYxNTE1NTQyMiwiZXhwIjoxNjQ2NjkxNDIyLCJzdWIiOiI4NGM5YWE0Yi02MDcwLTQxYTktYTFjNi01MGYwYTUzZmQ3ZTkiLCJzY29wZXMiOlsic2hpcHBpbmctY2FsY3VsYXRlIiwic2hpcHBpbmctdHJhY2tpbmciLCJlY29tbWVyY2Utc2hpcHBpbmciXX0.lMuZNpL-2XIaoqKaNcZuY5ZMMWJNUj3WVtBpoHN_mzqT-z8Rjzy4qBjJrFzXZqXCFIDk3JZtQH9O54BhAvmnyF0zy0DDEPlcVVz5rVsL_XojvHj8B0UNx7lqobpHJx1zxgI_JZ9X1YobCj1FSiq_gjDjKSFsUdta5M86imQUazW9GpnSJqKAIhR-GpL00kq9WE5MyDWoc-9KueI4Rt0RG5TWG-xdR1w0uKO9nmE6xEZgt7Icx18gYk-Mq4svMQz0fWcjsrc98Dm0lFquzWrLey4TnpLzDCzGDijzJZb48BB3tReJfucjOy58HTdkhGFBeiTuWh0IzXvT-glf-KHxQny3sBiUBWGQFzfgzYrpGVK5AEol6eluQF_MU0eNqLpcaQnET5pfz67ba_ZAiYF3R_SsMMjBvt4UMbpRMyzKtuiZd9ssAb36dvPAsCyR5OUnZp3jrfyCT_PepEXU1vwcBxcJHDwGrmbMup7w3RJJxeBzqUN6vbOvrM9d0aHmaFw6b4W_2cbHUp8Ug057xMEgkIW4lm7qxjMErZvSberw6DjNEN2XTBrk4JEul-rxXxfcsfHdW3aIbDl8wZVb1W-MKwEJ1uhoBVaUUXBEMeRw2GMjd-csalKeisTwwd3sbx_TwOg6K9XKl8F21o-jAPq6ByNk7lk6VIxbwMqP2MfRZvw',
-        'User-Agent': 'loja da mona (monalisa.23@hotmail.com.br)'
+    console.log('array de products', array)
+    var data = {
+      "from": {
+        "postal_code": "41301170"
       },
-      body: data
-    })
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      "to": {
+        "postal_code": cep
+      }, "products": array
+    }
+    console.log('DATA DO CALC FRETE', data)
 
+    const options = {
+      method: 'POST',
+      url: 'https://api-loja-mona.herokuapp.com/shipping/calculate',
+      headers: { 'Content-Type': 'application/json' },
+      data: data
+    };
+    axios.request(options).then(function (response) {
+      let sedex = response.data.find(r => r.name==="SEDEX")
+      setDeliveryPrice(sedex.price)
+      console.log('sedex obj', sedex)
+      console.log(response.data);
+      
+    }).catch(function (error) {
+      console.error(error);
+    });
   }
 
   useEffect(() => {
@@ -110,7 +120,6 @@ export default function () {
         })
         setCartItems(array)
       }
-
     }
   }, [authContext])
 
@@ -126,7 +135,7 @@ export default function () {
         "name": user.name
       },
       "shipments": {
-        "cost": 0,
+        "cost": totalValue(),
       },
       "back_urls": {
         "success": `loja-mona.vercel.app/order-status/success/params`,
@@ -368,8 +377,8 @@ export default function () {
                               <td>{calculateTotalPrice(cartState, true)}</td>
                             </tr>
                             <tr>
-                              <td>Total</td>
-                              <td>{calculateTotalPrice(cartState, true)}</td>
+                              <td>Total (+ frete)</td>
+                              <td>{formatCurrency(totalValue())} </td>
                             </tr>
                           </tbody>
                         </table>
