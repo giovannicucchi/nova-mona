@@ -19,7 +19,7 @@ const App = ({ Component, pageProps, reduxStore }) => {
   // console.log('page props', pageProps);
   React.useEffect(() => {
     const token = Cookie.get("token");
-    console.log('TOKEN', token)
+    // console.log('TOKEN', token)
 
     if (token) {
       // authenticate the token on the server and place set user object

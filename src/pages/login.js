@@ -34,7 +34,7 @@ export default function () {
         authContext.setUser(res.data.user);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        // console.log(error.response.data);
       });
   };
 

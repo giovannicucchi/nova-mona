@@ -16,15 +16,15 @@ export default function ({products}) {
   const [foundProduct, setFoundProduct] = useState()
   const router = useRouter();
   const { slug } = router.query;
-  console.log('SLUG', slug)
+  // console.log('SLUG', slug)
   const onReviewSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
   };
 
   useEffect(() => {
     async function fetchData() {
       const response = await getProduct(slug);
-      console.log('response', response)
+      // console.log('response', response)
       setFoundProduct(response)
     }
     fetchData();

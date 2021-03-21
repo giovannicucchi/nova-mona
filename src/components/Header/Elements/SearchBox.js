@@ -11,7 +11,7 @@ export default function SearchBox({ showSearch, setShowSearch }) {
     setShowSearch(false);
   });
   function onSubmit(data) {
-    console.log(data);
+    // console.log(data);
   }
   return (
     <CSSTransition

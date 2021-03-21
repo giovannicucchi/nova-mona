@@ -14,7 +14,7 @@ import axios from 'axios';
 export default function () {
   const authContext = useContext(AuthContext)
   const router = useRouter()
-  console.log('auth', authContext)
+  // console.log('auth', authContext)
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -49,12 +49,12 @@ export default function () {
     setLoading(true);
     updateUser(authContext.user.id, username, email, password, address, complement, addressNumber, neighborhood, reference, cep, city)
       .then((res) => {
-        console.log('res', res)
+        // console.log('res', res)
         authContext.setUser(res.data);
         setLoading(false);
       })
       .catch((error) => {
-        console.log('error', error);
+        // console.log('error', error);
         setLoading(false);
       });
   };

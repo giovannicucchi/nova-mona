@@ -50,9 +50,9 @@ export default function () {
 
   const calcFrete = async () => {
     let array = []
-    console.log('cart items', cartItems)
+    // console.log('cart items', cartItems)
     cartItems.map(p => {
-      console.log('map', p)
+      // console.log('map', p)
       let object = {
         "id": p.id,
         "width": 10,
@@ -64,7 +64,7 @@ export default function () {
       }
       array.push(object)
     })
-    console.log('array de products', array)
+    // console.log('array de products', array)
     var data = {
       "from": {
         "postal_code": "41301170"
@@ -73,7 +73,7 @@ export default function () {
         "postal_code": cep
       }, "products": array
     }
-    console.log('DATA DO CALC FRETE', data)
+    // console.log('DATA DO CALC FRETE', data)
 
     const options = {
       method: 'POST',
@@ -84,8 +84,8 @@ export default function () {
     axios.request(options).then(function (response) {
       let sedex = response.data.find(r => r.name==="SEDEX")
       setDeliveryPrice(sedex.price)
-      console.log('sedex obj', sedex)
-      console.log(response.data);
+      // console.log('sedex obj', sedex)
+      // console.log(response.data);
       
     }).catch(function (error) {
       console.error(error);
@@ -94,7 +94,7 @@ export default function () {
 
   useEffect(() => {
     if (authContext.user) {
-      console.log("auth context user", authContext.user)
+      // console.log("auth context user", authContext.user)
       setEmail(authContext.user.email)
       setAddress(authContext.user.address)
       setComplement(authContext.user.complement)
@@ -103,7 +103,7 @@ export default function () {
       setReference(authContext.user.reference)
       setCity(authContext.user.city)
 
-      console.log('cart state', cartState)
+      // console.log('cart state', cartState)
       if (cartState) {
         let array = []
         cartState.map(item => {

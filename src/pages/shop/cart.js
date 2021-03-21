@@ -21,7 +21,7 @@ export default function () {
   const dispatch = useDispatch();
   const { register, handleSubmit, watch, errors } = useForm();
   const cartState = useSelector((state) => state.cartReducer);
-  console.log('cart state', cartState);
+  // console.log('cart state', cartState);
   const onSubmit = (data) => console.log(data);
   const removeAllProduct = (e) => {
     e.preventDefault();
