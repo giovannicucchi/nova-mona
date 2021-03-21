@@ -2,12 +2,12 @@
   {
     "iconClass": "fas fa-map-marker-alt",
     "title": "Endereço",
-    "detail": "Aquele lugar alí do lado"
+    "detail": "Rua São Geraldo, nº 14 São Cristóvão - 1º andar"
   },
   {
     "iconClass": "fas fa-phone-alt",
     "title": "Telefone",
-    "detail": "71 99647-5094"
+    "detail": "71 99316-9319"
   },
   {
     "iconClass": "far fa-envelope",
@@ -17,6 +17,6 @@
   {
     "iconClass": "far fa-clock",
     "title": "Funcionamento",
-    "detail": "Seg a Sex 8h as 23h"
+    "detail": "Seg a Sex 8h as 20h"
   }
 ]
