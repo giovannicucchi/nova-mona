@@ -14,7 +14,7 @@ import { calculateTotalPrice } from "../../common/shopUtils"
 export default function () {
   const authContext = useContext(AuthContext)
   const router = useRouter()
-  console.log('user data', authContext.user)
+  // console.log('user data', authContext.user)
 
   const cartState = useSelector((state) => state.cartReducer)
   const { register, handleSubmit, errors } = useForm()
@@ -87,7 +87,7 @@ export default function () {
       // console.log('response', response)
       let sedex = response.data.find(r => r.name==="SEDEX")
       setDeliveryPrice(sedex.price)
-      console.log('sedex obj', sedex)
+      // console.log('sedex obj', sedex)
       // console.log(response.data);
       
     }).catch(function (error) {
@@ -129,7 +129,9 @@ export default function () {
 
   const onBuy = async () => {
     if (!authContext.user) return router.push('/login')
+    // console.log('local storage', localStorage)
     let token = localStorage.getItem('token')
+    // console.log('token aqui nessa desgraça', token)
     // console.log('user')
 
     const preference = {

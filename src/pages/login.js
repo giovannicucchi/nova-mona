@@ -31,6 +31,7 @@ export default function () {
 
     login(username, password)
       .then((res) => {
+        localStorage.setItem('token', res.data.jwt)
         authContext.setUser(res.data.user);
       })
       .catch((error) => {
@@ -51,9 +52,9 @@ export default function () {
       </Breadcrumb>
       <div className="col-xs-12 col-sm-9 col-md-6 form-register">
         {loading ?
-        <div style={{width: '100%', height: '15em'}}>
-          <Loading />
-        </div>
+          <div style={{ width: '100%', height: '15em' }}>
+            <Loading />
+          </div>
           :
           <Form style={{ marginBottom: '2em' }}>
             <FormGroup style={{ display: 'flex', flexDirection: 'column', marginBottom: '1.5em' }}>
@@ -65,7 +66,7 @@ export default function () {
               <Input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="examplePassword" placeholder="Digite sua senha" />
             </FormGroup>
 
-            <Button onClick={handleSubmit} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white', marginBottom:'1em' }}>Login</Button>
+            <Button onClick={handleSubmit} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white', marginBottom: '1em' }}>Login</Button>
             <Button onClick={goToRegister} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white' }}>Registrar</Button>
           </Form>
         }

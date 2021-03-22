@@ -31,6 +31,7 @@ export default function () {
     registerUser(username, email, password, address, complement, addressNumber, neighborhood, reference, cep, city)
       .then((res) => {
         setLoading(false);
+        localStorage.setItem('token', res.data.jwt)
         authContext.setUser(res.data.user);
       })
       .catch((error) => {
