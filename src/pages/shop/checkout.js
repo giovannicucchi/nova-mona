@@ -148,8 +148,7 @@ export default function () {
         "pending": `loja-mona.vercel.app/order-status/pending/params`
       },
       "address": {
-        "street_name": `"
-        endereço: ${address},
+        "street_name": `"endereço: ${address},
         numero: ${addressNumber},
         complemento: ${complement},
         referencia: ${reference},
