@@ -14,6 +14,7 @@ import { calculateTotalPrice } from "../../common/shopUtils"
 export default function () {
   const authContext = useContext(AuthContext)
   const router = useRouter()
+  console.log('user data', authContext.user)
 
   const cartState = useSelector((state) => state.cartReducer)
   const { register, handleSubmit, errors } = useForm()
@@ -38,6 +39,7 @@ export default function () {
   const [reference, setReference] = useState("")
   const [cep, setCep] = useState("")
   const [city, setCity] = useState("")
+  const [observacoes, setOberservacoes] = useState("")
   const [cartItems, setCartItems] = useState([])
   const [deliveryPrice, setDeliveryPrice] = useState(0)
 
@@ -70,7 +72,7 @@ export default function () {
         "postal_code": "41301170"
       },
       "to": {
-        "postal_code": cep
+        "postal_code": `"${cep}"`
       }, "products": array
     }
     // console.log('DATA DO CALC FRETE', data)
@@ -82,9 +84,10 @@ export default function () {
       data: data
     };
     axios.request(options).then(function (response) {
+      // console.log('response', response)
       let sedex = response.data.find(r => r.name==="SEDEX")
       setDeliveryPrice(sedex.price)
-      // console.log('sedex obj', sedex)
+      console.log('sedex obj', sedex)
       // console.log(response.data);
       
     }).catch(function (error) {
@@ -102,6 +105,7 @@ export default function () {
       setNeighborhood(authContext.user.neighborhood)
       setReference(authContext.user.reference)
       setCity(authContext.user.city)
+      setCep(authContext.user.cep)
 
       // console.log('cart state', cartState)
       if (cartState) {
@@ -124,15 +128,16 @@ export default function () {
   }, [authContext])
 
   const onBuy = async () => {
-    if (!user) return router.push('/login')
+    if (!authContext.user) return router.push('/login')
     let token = localStorage.getItem('token')
+    // console.log('user')
 
     const preference = {
       items: cartItems,
       payer: {
-        "user_id": user.id,
-        "email": user.email,
-        "name": user.name
+        "user_id": authContext.user.id,
+        "email": authContext.user.email,
+        "name": authContext.user.name
       },
       "shipments": {
         "cost": totalValue(),
@@ -142,17 +147,36 @@ export default function () {
         "failure": `loja-mona.vercel.app/order-status/failure/params`,
         "pending": `loja-mona.vercel.app/order-status/pending/params`
       },
+      "address": {
+        "street_name": `"
+        endereço: ${address},
+        numero: ${addressNumber},
+        complemento: ${complement},
+        referencia: ${reference},
+        bairro: ${neighborhood},
+        cidade: ${city},
+        cep: ${cep},
+        observacoes: ${observacoes}"`,
+      }
     }
-
-    await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/order/preference`, preference, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(({ data }) => {
-        if (data.id)
-          generateScript(data.id)
-
-      }).catch(err => console.log(err))
+    // console.log('ordem aqui', preference)
+    if (address && addressNumber && complement && reference && neighborhood && city && cep) {
+      await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/order/preference`, preference, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(({ data }) => {
+          if (data.id)
+            generateScript(data.id)
+  
+        }).catch(err => console.log(err))
+    }
   }
+
+  useEffect(() => {
+    if (cep) {
+      calcFrete()
+    }
+  }, [cep])
 
   return (
     <LayoutFour title="Checkout">
@@ -331,6 +355,7 @@ export default function () {
                               type="text"
                               name="note"
                               placeholder="Alguma observação especial?"
+                              onChange={(e) => setOberservacoes(e.target.value)}
                               ref={register()}
                             />
                           </label>
@@ -386,7 +411,7 @@ export default function () {
                     </div>
                     <button
                       className="btn -red"
-                      onClick={() => calcFrete()}
+                      onClick={() => onBuy()}
                     >
                       Prosseguir
                     </button>
