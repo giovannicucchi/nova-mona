@@ -23,7 +23,7 @@ export default function () {
     handleSubmit: couponHandleSubmit,
     errors: couponErrors,
   } = useForm()
-  
+
   const onSubmit = (data) => {
     // console.log(data)
     !authContext.user && router.push("/register")
@@ -43,10 +43,10 @@ export default function () {
   const [cartItems, setCartItems] = useState([])
   const [deliveryPrice, setDeliveryPrice] = useState(0)
 
-  const totalValue = () => { 
+  const totalValue = () => {
     let x = calculateTotalPrice(cartState, false)
     let y = Number(deliveryPrice)
-    let z = x+y
+    let z = x + y
     return z
   }
 
@@ -85,11 +85,11 @@ export default function () {
     };
     axios.request(options).then(function (response) {
       // console.log('response', response)
-      let sedex = response.data.find(r => r.name==="SEDEX")
+      let sedex = response.data.find(r => r.name === "SEDEX")
       setDeliveryPrice(sedex.price)
       // console.log('sedex obj', sedex)
       // console.log(response.data);
-      
+
     }).catch(function (error) {
       console.error(error);
     });
@@ -157,8 +157,7 @@ export default function () {
       })
         .then(({ data }) => {
           if (data.id)
-            generateScript(data.id)
-  
+            window.location.href = data.id
         }).catch(err => console.log(err))
     }
   }
@@ -194,164 +193,11 @@ export default function () {
                         </p>
                       }
                     </div>
-                    <div className="input-validator">
-                      <input
-                        type="text"
-                        name="contact"
-                        ref={register({ required: true })}
-                        placeholder="Email ou número para contato"
-                        value={email}
-                      />
-                      {errors.contact && (
-                        <span className="input-error">
-                          Por favor, preencha com um email ou número para contato
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="checkout__form__shipping">
-                    <h5 className="checkout-title">Endereço para envio</h5>
-                    <div className="row">
-                      <div className="col-12">
-                        <div className="input-validator">
-                          <label>
-                            Nome <span>*</span>
-                            <input
-                              type="text"
-                              name="firstName"
-                              placeholder="Seu nome"
-                              ref={register({ required: true })}
-                            />
-                          </label>
-                          {errors.firstName && (
-                            <span className="input-error">
-                              Por favor, preencha com o seu nome
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="input-validator">
-                          <label>
-                            Endereço <span>*</span>
-                            <input
-                              type="text"
-                              name="streetAddress"
-                              ref={register({ required: true })}
-                              placeholder="Endereço"
-                              value={address}
-                              onChange={(e) => setAddress(e.target.value)}
-
-                            />
-                            <input
-                              type="text"
-                              name="apartment"
-                              ref={register({ required: true })}
-                              placeholder="Número"
-                              value={addressNumber}
-                              onChange={(e) => setAddressNumber(e.target.value)}
-
-                            />
-                          </label>
-                          {errors.streetAddress || errors.apartment ? (
-                            <span className="input-error">
-                              Por favor, preencha com o seu endereço
-                            </span>
-                          ) : null}
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="input-validator">
-                          <label>
-                            Cidade <span>*</span>
-                            <input
-                              type="text"
-                              name="town"
-                              ref={register({ required: true })}
-                              value={city}
-                              onChange={(e) => setCity(e.target.value)}
-
-                            />
-                          </label>
-                          {errors.town && (
-                            <span className="input-error">
-                              Por favor, preencha com a sua cidade
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="input-validator">
-                          <label>
-                            Bairro <span>*</span>
-                            <input
-                              type="text"
-                              name="state"
-                              ref={register({ required: true })}
-                              value={neighborhood}
-                              onChange={(e) => setNeighborhood(e.target.value)}
-
-                            />
-                          </label>
-                          {errors.state && (
-                            <span className="input-error">
-                              Por favor, preencha com o seu bairro
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="input-validator">
-                          <label>
-                            Referência <span>*</span>
-                            <input
-                              type="text"
-                              name="reference"
-                              ref={register({ required: false })}
-                              value={reference}
-                              onChange={(e) => setReference(e.target.value)}
-
-                            />
-                          </label>
-
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="input-validator">
-                          <label>
-                            Código Postal <span>*</span>
-                            <input
-                              type="number"
-                              name="zip"
-                              ref={register({ required: true })}
-                              value={cep}
-                              onChange={(e) => setCep(e.target.value)}
-                              placeholder="Apenas números"
-
-                            />
-                          </label>
-                          {errors.zip && (
-                            <span className="input-error">
-                              Preencha com o seu CEP
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="input-validator">
-                          <label>
-                            Observações
-                            <input
-                              type="text"
-                              name="note"
-                              placeholder="Alguma observação especial?"
-                              onChange={(e) => setOberservacoes(e.target.value)}
-                              ref={register()}
-                            />
-                          </label>
-                        </div>
-                      </div>
+                    <div className="checkout__total">
+                      <h5 style={{marginBottom: 8}}>Endereço:</h5>
+                      <p style={{marginBottom: 4}}>{address}, {addressNumber}</p>
+                      <p style={{marginBottom: 4}}>{complement}, {reference}</p>
+                      <p style={{marginBottom: 4}}>{neighborhood}, {city}, {cep}</p>
                     </div>
                   </div>
                 </div>
