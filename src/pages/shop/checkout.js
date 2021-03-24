@@ -149,16 +149,6 @@ export default function () {
         "failure": `loja-mona.vercel.app/order-status/failure/params`,
         "pending": `loja-mona.vercel.app/order-status/pending/params`
       },
-      "address": {
-        "street_name": `"endereço: ${address},
-        numero: ${addressNumber},
-        complemento: ${complement},
-        referencia: ${reference},
-        bairro: ${neighborhood},
-        cidade: ${city},
-        cep: ${cep},
-        observacoes: ${observacoes}"`,
-      }
     }
     // console.log('ordem aqui', preference)
     if (address && addressNumber && complement && reference && neighborhood && city && cep) {
