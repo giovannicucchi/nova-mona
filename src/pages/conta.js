@@ -45,9 +45,11 @@ export default function () {
   }, [])
 
   const handleSubmit = async (e) => {
+    let token = localStorage.getItem('token')
+
     e.preventDefault();
     setLoading(true);
-    updateUser(authContext.user.id, username, email, password, address, complement, addressNumber, neighborhood, reference, cep, city)
+    updateUser(address, complement, addressNumber, neighborhood, reference, cep, city, token)
       .then((res) => {
         // console.log('res', res)
         authContext.setUser(res.data);
@@ -137,16 +139,6 @@ export default function () {
                 </FormGroup>
 
                 <FormGroup style={{ display: 'flex', flexDirection: 'column', marginBottom: '1em' }}>
-                  <Label for="Email" style={{ marginRight: '0.5em', marginBottom: '0.5em' }}>Email</Label>
-                  <Input onChange={(e) => setEmail(e.target.value)} value={email} type="email" name="email" id="Email" placeholder="Digite seu email" />
-                </FormGroup>
-
-                {/* <FormGroup style={{ display: 'flex', flexDirection: 'column', marginBottom: '1em' }}>
-            <Label for="Password" style={{ marginRight: '0.5em', marginBottom: '0.5em' }}>Senha</Label>
-            <Input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="Password" placeholder="Aqui você escolhe sua senha" />
-          </FormGroup> */}
-
-                <FormGroup style={{ display: 'flex', flexDirection: 'column', marginBottom: '1em' }}>
                   <Label for="Address" style={{ marginRight: '0.5em', marginBottom: '0.5em' }}>Endereço</Label>
                   <Input onChange={(e) => setAddress(e.target.value)} value={address} type="text" name="address" id="Address" placeholder="Digite seu endereço" />
                 </FormGroup>
@@ -181,7 +173,7 @@ export default function () {
                   <Input onChange={(e) => setCep(e.target.value)} value={cep} type="number" name="cep" id="cep" placeholder="Qual o seu CEP?" />
                 </FormGroup>
 
-                <Button onClick={handleSubmit} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white' }}>Terminar o cadastro</Button>
+                <Button onClick={handleSubmit} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white' }}>Atualizar dados</Button>
               </Form>
             </div>
           </>
