@@ -28,11 +28,11 @@ export default function () {
   const [loading, setLoading] = useState(false)
   const [listaPedidos, setListaPedidos] = useState([])
 
-  useEffect(async () => {
+  useEffect(() => {
     let token = localStorage.getItem('token')
     const user = authContext.user
     if(user) {
-      await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/orders`, { 
+      axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/orders`, { 
         headers: { Authorization: `Bearer ${token}`}
       })
         .then(res => {
