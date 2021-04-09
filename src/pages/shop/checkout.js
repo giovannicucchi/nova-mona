@@ -196,11 +196,13 @@ export default function () {
                       }
                     </div>
                     <div className="checkout__total">
-                      <h5 style={{marginBottom: 8}}>Endereço:</h5>
-                      <p style={{marginBottom: 4}}>{address}, {addressNumber}</p>
-                      <p style={{marginBottom: 4}}>{complement}, {reference}</p>
-                      <p style={{marginBottom: 4}}>{neighborhood}, {city}, {cep}</p>
-                      <button className="btn -red" style={{marginTop: 12}} onClick={() => router.push("/conta")}>Alterar Endereço</button>
+                      <h5 style={{ marginBottom: 8 }}>Endereço:</h5>
+                      <p style={{ marginBottom: 4 }}>{address}, {addressNumber}</p>
+                      <p style={{ marginBottom: 4 }}>{complement}, {reference}</p>
+                      <p style={{ marginBottom: 4 }}>{neighborhood}, {city}, {cep}</p>
+                      <Link href={process.env.PUBLIC_URL + "/conta"} style={{marginTop: 8}}>
+                        <a>Alterar endereço</a>
+                      </Link>
                     </div>
                   </div>
                 </div>

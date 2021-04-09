@@ -31,36 +31,46 @@ export default function () {
   useEffect(() => {
     let token = localStorage.getItem('token')
     console.log('token', token)
-    if(token) {
+    if (token) {
       console.log('entrou no if')
-      axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/orders`, { 
-        headers: { Authorization: `Bearer ${token}`}
+      axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/orders`, {
+        headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => {
-            console.log("res", res)
-            if(res.status === 200)
-              setListaPedidos(res.data)
+          console.log("res", res)
+          if (res.status === 200)
+            setListaPedidos(res.data)
         })
         .catch(err => console.log('Erro', err))
     } else {
-      // router.push('/login')
+      router.push('/login')
     }
   }, [])
 
   const handleSubmit = async (e) => {
-    console.log('submit')
+    // console.log('submit')
     let token = localStorage.getItem('token')
 
     e.preventDefault();
     setLoading(true);
-    updateUser(address, complement, addressNumber, neighborhood, reference, cep, city, token)
+    updateUser({
+      address: address,
+      complement: complement,
+      addressNumber: addressNumber,
+      neighborhood: neighborhood,
+      reference: reference,
+      cep: cep,
+      city: city,
+      token: token
+    })
+
       .then((res) => {
-        // console.log('res', res)
-        authContext.setUser(res.data);
+        console.log('res', res)
+        // authContext.setUser(res.data);
         setLoading(false);
       })
       .catch((error) => {
-        // console.log('error', error);
+        console.log('error', error);
         setLoading(false);
       });
   };
@@ -108,13 +118,13 @@ export default function () {
             <div className="col-xs-12">
               {listaPedidos.length > 0 && <h5>Lista de Pedidos</h5>}
               {listaPedidos.map((item, index) => (
-                <div key={index} style={{marginBottom: '2em'}}>
-                  <Button color="primary" id={'toggler' + index} style={{ marginTop: '1rem', width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+                <div key={index} style={{ marginBottom: '2em' }}>
+                  <Button color="primary" id={'toggler' + index} style={{ marginTop: '1rem', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
                     <div>
                       Pedido Nº {item.id}
                     </div>
-                    <div style={{display: 'flex'}}>
-                      <div style={{marginRight: '1rem'}}>
+                    <div style={{ display: 'flex' }}>
+                      <div style={{ marginRight: '1rem' }}>
                         {item.status}
                       </div>
                       <div>
@@ -129,7 +139,7 @@ export default function () {
                         {item.items.map((p, index) => (
                           <li key={index}>{p.title} - R${p.unit_price}</li>
                         ))}
-                    </CardBody>
+                      </CardBody>
                     </Card>
                   </UncontrolledCollapse>
                 </div>

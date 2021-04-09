@@ -12,7 +12,7 @@ import { logout } from "../../../../lib/auth";
 
 const data = [
   { title: "Sobre nós", to: "/other/about" },
-  { title: "Contato", to: "/other/contact" }
+  { title: "Contato", to: "/other/contact" },
 ];
 
 export default function MenuTwo({ container }) {
@@ -55,6 +55,11 @@ export default function MenuTwo({ container }) {
                   <li>
                     <Link href={process.env.PUBLIC_URL + '/conta'}>
                       <a>Minha conta</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href={process.env.PUBLIC_URL + '/shop/cart'}>
+                      <a>Carrinho</a>
                     </Link>
                   </li>
                   <li>
