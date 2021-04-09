@@ -49,7 +49,7 @@ export default function () {
     let x = calculateTotalPrice(cartState, false)
     let y = Number(deliveryPrice)
     let z = x + y
-    return x
+    return z
   }
 
   const calcFrete = async () => {
@@ -133,7 +133,6 @@ export default function () {
     if (!authContext.user) return router.push('/login')
     // console.log('local storage', localStorage)
     let token = localStorage.getItem('token')
-    // console.log('token aqui nessa desgraça', token)
     // console.log('user')
 
     const preference = {
@@ -144,7 +143,7 @@ export default function () {
         "name": authContext.user.name
       },
       "shipments": {
-        "cost": 0,
+        "cost": deliveryPrice,
       },
       "back_urls": {
         "success": `loja-mona.vercel.app/order-status/success/params`,
@@ -153,6 +152,7 @@ export default function () {
       },
     }
     // console.log('ordem aqui', preference)
+    // console.log('authh context user', authContext)
     if (address && addressNumber && complement && reference && neighborhood && city && cep) {
       await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/order/preference`, preference, {
         headers: { Authorization: `Bearer ${token}` }

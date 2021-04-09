@@ -10,6 +10,8 @@ import {
   Breadcrumb,
   BreadcrumbItem,
 } from "../../../components/Other/Breadcrumb";
+import Loading from "../../../components/Other/Loading";
+
 import ProductSlideTwo from "../../../components/Sections/ProductThumb/ProductSlide/ProductSlideTwo";
 
 export default function ({products}) {
@@ -45,5 +47,5 @@ export default function ({products}) {
       </LayoutFour>
     )
       :
-      <div>aaaa</div>);
+      <Loading />);
 }

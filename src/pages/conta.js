@@ -30,14 +30,14 @@ export default function () {
 
   useEffect(() => {
     let token = localStorage.getItem('token')
-    console.log('token', token)
+    // console.log('token', token)
     if (token) {
       console.log('entrou no if')
       axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/orders`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => {
-          console.log("res", res)
+          // console.log("res", res)
           if (res.status === 200)
             setListaPedidos(res.data)
         })
