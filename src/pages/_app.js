@@ -18,7 +18,7 @@ const App = ({ Component, pageProps, reduxStore }) => {
 
   // console.log('page props', pageProps);
   React.useEffect(() => {
-    const token = Cookie.get("token");
+    const token = localStorage.getItem("token");
     // console.log('TOKEN', token)
 
     if (token) {
@@ -31,7 +31,7 @@ const App = ({ Component, pageProps, reduxStore }) => {
         // if res comes back not valid, token is not valid
         // delete the token and log the user out on client
         if (!res.ok) {
-          Cookie.remove("token");
+          localStorage.remove("token");
           setUser(null)
           return null;
         }

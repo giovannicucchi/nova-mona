@@ -36,6 +36,8 @@ export default function () {
       })
       .catch((error) => {
         // console.log(error.response.data);
+        setLoading(false)
+        alert('Usuário ou senha inválidos!')
       });
   };
 
@@ -66,8 +68,10 @@ export default function () {
               <Input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="examplePassword" placeholder="Digite sua senha" />
             </FormGroup>
 
-            <Button onClick={handleSubmit} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white', marginBottom: '1em' }}>Login</Button>
-            <Button onClick={goToRegister} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white' }}>Registrar</Button>
+            <div style={{ display: 'flex'}}>
+              <Button onClick={goToRegister} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white', width: 150, justifyContent:'center' }}>Registrar</Button>
+              <Button onClick={handleSubmit} style={{ display: 'flex', margin: 'auto', background: '#F083A6', color: 'white', width: 150, justifyContent:'center' }}>Login</Button>
+            </div>
           </Form>
         }
       </div>

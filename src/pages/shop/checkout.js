@@ -10,6 +10,8 @@ import { Breadcrumb, BreadcrumbItem } from "../../components/Other/Breadcrumb"
 import InstagramTwo from "../../components/Sections/Instagram/InstagramTwo"
 import { formatCurrency, formatSingleNumber } from "../../common/utils"
 import { calculateTotalPrice } from "../../common/shopUtils"
+import { Button } from 'reactstrap';
+
 
 export default function () {
   const authContext = useContext(AuthContext)
@@ -47,7 +49,7 @@ export default function () {
     let x = calculateTotalPrice(cartState, false)
     let y = Number(deliveryPrice)
     let z = x + y
-    return z
+    return x
   }
 
   const calcFrete = async () => {
@@ -142,7 +144,7 @@ export default function () {
         "name": authContext.user.name
       },
       "shipments": {
-        "cost": totalValue(),
+        "cost": 0,
       },
       "back_urls": {
         "success": `loja-mona.vercel.app/order-status/success/params`,
@@ -198,6 +200,7 @@ export default function () {
                       <p style={{marginBottom: 4}}>{address}, {addressNumber}</p>
                       <p style={{marginBottom: 4}}>{complement}, {reference}</p>
                       <p style={{marginBottom: 4}}>{neighborhood}, {city}, {cep}</p>
+                      <button className="btn -red" style={{marginTop: 12}} onClick={() => router.push("/conta")}>Alterar Endereço</button>
                     </div>
                   </div>
                 </div>

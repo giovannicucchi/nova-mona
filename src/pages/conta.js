@@ -30,21 +30,25 @@ export default function () {
 
   useEffect(() => {
     let token = localStorage.getItem('token')
-    const user = authContext.user
-    if(user) {
+    console.log('token', token)
+    if(token) {
+      console.log('entrou no if')
       axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/orders`, { 
         headers: { Authorization: `Bearer ${token}`}
       })
         .then(res => {
+            console.log("res", res)
             if(res.status === 200)
               setListaPedidos(res.data)
         })
         .catch(err => console.log('Erro', err))
-    } else 
-      router.push('/login')
+    } else {
+      // router.push('/login')
+    }
   }, [])
 
   const handleSubmit = async (e) => {
+    console.log('submit')
     let token = localStorage.getItem('token')
 
     e.preventDefault();
