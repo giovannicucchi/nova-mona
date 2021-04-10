@@ -1,4 +1,6 @@
 import React from 'react'
+import App from "next/app";
+
 import Cookie from "js-cookie";
 import AuthContext from '../context/AuthContext'
 
@@ -13,7 +15,7 @@ import "../styles/styles.scss";
 import Loading from "../components/Other/Loading";
 import withReduxStore from "../common/with-redux-store";
 
-const App = ({ Component, pageProps, reduxStore }) => {
+const MyApp = ({ Component, pageProps, reduxStore }) => {
   const [user, setUser] = React.useState(null)
 
   // console.log('page props', pageProps);
@@ -73,15 +75,15 @@ const App = ({ Component, pageProps, reduxStore }) => {
   );
 };
 
-App.getInitialProps = async (ctx) => {
+MyApp.getInitialProps = async (ctx) => {
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
-  // const appProps = await App.getInitialProps(ctx);
+  const appProps = await App.getInitialProps(ctx);
   // Fetch global site settings from Strapi
   const categories = await getCategories();
   const banners = await getBanners();
   const products = await getProducts();
   // Pass the data to our page via props
-  return { pageProps: { categories, banners, products, path: ctx.pathname } };
+  return { ...appProps, pageProps: { categories, banners, products, path: ctx.pathname } };
 };
 
-export default withReduxStore(App);
+export default withReduxStore(MyApp);
