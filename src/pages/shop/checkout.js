@@ -49,6 +49,7 @@ export default function () {
     let x = calculateTotalPrice(cartState, false)
     let y = Number(deliveryPrice)
     let z = x + y
+    // console.log('z', z)
     return z
   }
 
@@ -143,7 +144,7 @@ export default function () {
         "name": authContext.user.name
       },
       "shipments": {
-        "cost": deliveryPrice,
+        "cost": Number(deliveryPrice),
       },
       "back_urls": {
         "success": `loja-mona.vercel.app/order-status/success/params`,
