@@ -12,6 +12,7 @@ export default function LayoutTwo(props) {
     <>
       <Head>
         <title>{props.title || "Loja da Mona"}</title>
+        <meta name="facebook-domain-verification" content="xy25p141l9eqommx4yvnykxde1jil6" />
       </Head>
       <ScrollFixedHeader container={props.container} />
       {props.children}
