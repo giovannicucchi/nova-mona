@@ -11,14 +11,6 @@ import ReactPixel from 'react-facebook-pixel';
 let ScrollFixedHeader = withScrollFixed(HeaderTwo);
 
 export default function LayoutTwo(props) {
-  const options = {
-    autoConfig: true, // set pixel's autoConfig. More info: https://developers.facebook.com/docs/facebook-pixel/advanced/
-    debug: false, // enable logs
-  };
-  ReactPixel.init('471256527524029', advancedMatching, options);
-
-  ReactPixel.pageView(); // For tracking page view
-
   return (
     <>
       <Head>

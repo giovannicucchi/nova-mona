@@ -18,10 +18,20 @@ import withReduxStore from "../common/with-redux-store";
 const MyApp = ({ Component, pageProps, reduxStore }) => {
   const [user, setUser] = React.useState(null)
 
+  
   // console.log('page props', pageProps);
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     // console.log('TOKEN', token)
+    import("react-facebook-pixel")
+        .then((module) => module.default)
+        .then((ReactPixel) => {
+          ReactPixel.init("3208084489267232");
+          ReactPixel.pageView();
+          router.events.on("routeChangeComplete", () => {
+            ReactPixel.pageView();
+          });
+        });
 
     if (token) {
       // authenticate the token on the server and place set user object
