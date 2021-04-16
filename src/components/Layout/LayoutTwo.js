@@ -5,8 +5,6 @@ import withScrollFixed from "../../common/withScrollFixed";
 import HeaderTwo from "../Header/HeaderTwo";
 import FooterOne from "../Footer/FooterOne";
 
-import ReactPixel from 'react-facebook-pixel';
-
 
 let ScrollFixedHeader = withScrollFixed(HeaderTwo);
 
