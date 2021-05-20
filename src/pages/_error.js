@@ -15,10 +15,9 @@ export default function () {
             <div className="col-12 col-md-7">
               <div className="error-404__content">
                 <h2>Oops!</h2>
-                <h5>404 PAGE NOT FOUND</h5>
+                <h5>404 PÁGINA NÃO ENCONTRADA</h5>
                 <p>
-                  This page couldn't be found! Back to home page if you like.
-                  Please use search for help!
+                  Me desculpe, mas parece que essa página não existe ou está apresentando erros!
                 </p>
                 <div className="form-wrapper">
                   <form>
@@ -28,7 +27,7 @@ export default function () {
                     </button>
                   </form>
                   <Button
-                    action={process.env.PUBLIC_URL + "/homepages/homepage1"}
+                    action={process.env.PUBLIC_URL + "/"}
                     className="-underline"
                     color="transparent"
                     content="Back to homepage"

@@ -62,6 +62,7 @@ const MyApp = ({ Component, pageProps, reduxStore }) => {
         setUser: setUserState,
       }}
     >
+      
       <Provider store={reduxStore}>
         <PersistGate loading={<Loading />} persistor={persistor}>
           <Component {...pageProps} />
