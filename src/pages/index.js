@@ -6,6 +6,9 @@ import InstagramOne from "../components/Sections/Instagram/InstagramOne";
 
 export default function Home({banners, categories, products}) {
 
+  products.map(p => console.log(p.title))
+  console.log('products length', products.length);
+
   return (
     <LayoutTwo title="Loja da Mona">
       <SliderTwo className="-style-2" data={banners} showDots />

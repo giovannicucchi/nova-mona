@@ -1,6 +1,7 @@
 import React from 'react'
 import App from "next/app";
 
+import { Router } from "next/router";
 import Cookie from "js-cookie";
 import AuthContext from '../context/AuthContext'
 
@@ -15,10 +16,16 @@ import "../styles/styles.scss";
 import Loading from "../components/Other/Loading";
 import withReduxStore from "../common/with-redux-store";
 
+import NProgress from 'nprogress'; //nprogress module
+import 'nprogress/nprogress.css'; //styles of nprogress
+// NProgress.configure({ showSpinner: false});
+//Binding events. 
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
+
 const MyApp = ({ Component, pageProps, reduxStore }) => {
   const [user, setUser] = React.useState(null)
-
-
   // console.log('page props', pageProps);
   React.useEffect(() => {
     const token = localStorage.getItem("token");
@@ -40,7 +47,7 @@ const MyApp = ({ Component, pageProps, reduxStore }) => {
         // if res comes back not valid, token is not valid
         // delete the token and log the user out on client
         if (!res.ok) {
-          localStorage.remove("token");
+          localStorage.removeItem("token");
           setUser(null)
           return null;
         }
@@ -62,7 +69,7 @@ const MyApp = ({ Component, pageProps, reduxStore }) => {
         setUser: setUserState,
       }}
     >
-      
+
       <Provider store={reduxStore}>
         <PersistGate loading={<Loading />} persistor={persistor}>
           <Component {...pageProps} />
@@ -93,5 +100,21 @@ MyApp.getInitialProps = async (ctx) => {
   // Pass the data to our page via props
   return { ...appProps, pageProps: { categories, banners, products, path: ctx.pathname } };
 };
+
+export async function getStaticPaths() {
+  // Call an external API endpoint to get posts
+  const res = await getProducts()
+  const posts = res
+
+  // Get the paths we want to pre-render based on posts
+  const paths = posts.map((post) => ({
+    params: { slug: post.slug },
+  }))
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: false } means other routes should 404.
+  return { paths, fallback: false }
+}
+
 
 export default withReduxStore(MyApp);
