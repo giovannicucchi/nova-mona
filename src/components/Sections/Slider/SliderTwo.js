@@ -43,7 +43,7 @@ export default function SliderTwo({ className, data, showArrows, showDots }) {
     <div className={`slider ${classNames(className)}`}>
       <div className="slider__carousel">
         <Slider {...settings}>
-          {data.map((slide, index) => (
+          {data?.map((slide, index) => (
             <div
               className={"slider__carousel__item " + `slider-${index + 1}`}
               key={index}

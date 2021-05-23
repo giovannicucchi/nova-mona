@@ -24,9 +24,11 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-const MyApp = ({ Component, pageProps, reduxStore }) => {
+const MyApp = (props) => {
   const [user, setUser] = React.useState(null)
-  // console.log('page props', pageProps);
+  const { Component, reduxStore } = props
+  const pageProps = props
+  // console.log('page props', pageProps); 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     // console.log('TOKEN', token)
@@ -90,16 +92,16 @@ const MyApp = ({ Component, pageProps, reduxStore }) => {
   );
 };
 
-MyApp.getInitialProps = async (ctx) => {
-  // Calls page's `getInitialProps` and fills `appProps.pageProps`
-  const appProps = await App.getInitialProps(ctx);
-  // Fetch global site settings from Strapi
-  const categories = await getCategories();
-  const banners = await getBanners();
-  const products = await getProducts();
-  // Pass the data to our page via props
-  return { ...appProps, pageProps: { categories, banners, products, path: ctx.pathname } };
-};
+// MyApp.getInitialProps = async (ctx) => {
+//   // Calls page's `getInitialProps` and fills `appProps.pageProps`
+//   const appProps = await App.getInitialProps(ctx);
+//   // Fetch global site settings from Strapi
+//   const categories = await getCategories();
+//   const banners = await getBanners();
+//   const products = await getProducts();
+//   // Pass the data to our page via props
+//   return { ...appProps, pageProps: { categories, banners, products, path: ctx.pathname } };
+// };
 
 export async function getStaticPaths() {
   // Call an external API endpoint to get posts
@@ -113,8 +115,9 @@ export async function getStaticPaths() {
 
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
-  return { paths, fallback: 'blocking' }
+  return { paths, fallback: false }
 }
+
 
 
 export default withReduxStore(MyApp);

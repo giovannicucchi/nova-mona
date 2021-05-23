@@ -17,7 +17,7 @@ export default function ProductTabOne({ data, categories }) {
   useEffect(() => {
     async function fetchData() {
       const response = await getCategory(currentCategory.slug);
-      setFilteredProduct(response.products)
+      setFilteredProduct(response?.products)
     }
     fetchData();
   }, [currentCategory]);
@@ -28,7 +28,7 @@ export default function ProductTabOne({ data, categories }) {
         <SectionTitleOne align="center">Confira nossos produtos</SectionTitleOne>
         <div className="product-tab__header">
           <ul>
-            {categories.map((category, index) => (
+            {categories?.map((category, index) => (
               <li
                 className={classNames({ active: currentCategory === category })}
                 key={index}

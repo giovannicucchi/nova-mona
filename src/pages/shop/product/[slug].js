@@ -14,10 +14,13 @@ import Loading from "../../../components/Other/Loading";
 
 import ProductSlideTwo from "../../../components/Sections/ProductThumb/ProductSlide/ProductSlideTwo";
 
-export default function ({products}) {
+import { getProducts } from '../../../utils/api'
+
+export default function (props) {
   const [foundProduct, setFoundProduct] = useState()
   const router = useRouter();
   const { slug } = router.query;
+  const { products } = props.pageProps
   // console.log('SLUG', slug)
   const onReviewSubmit = (data) => {
     // console.log(data);
@@ -48,4 +51,13 @@ export default function ({products}) {
     )
       :
       <Loading />);
+}
+export async function getServerSideProps(context) {
+  const products = await getProducts();
+
+  return {
+    props: {
+      products: products,
+    }
+  };
 }

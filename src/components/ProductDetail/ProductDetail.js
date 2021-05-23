@@ -4,6 +4,7 @@ import ProductDetailInfo from "./Elements/ProductDetailInfo";
 import ProductDetailSlideTwo from "./Elements/ProductDetailSlideTwo";
 
 export default function ProductDetail({ data, onReviewSubmit }) {
+  // console.log('product detail data', data)
   return (
     <div className="product-detail">
       <div className="container">
